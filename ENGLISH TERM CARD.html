@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="theme-color" content="#f5f0e8">
+<title>英语专有名词 · 翻译记忆卡（铅笔手绘）</title>
+<style>
+  /* ===== Sketch Style tokens ===== */
+  :root{
+    --paper:#f5f0e8;      /* bg-[#f5f0e8] */
+    --paper-2:#e8e2d8;    /* bg-[#e8e2d8] */
+    --paper-3:#faf5ed;    /* bg-[#faf5ed] */
+    --pencil:#2c2c2c;
+    --pencil-2:#5a5a5a;
+    --pencil-3:#8a8a8a;
+    --pencil-4:#a0a0a0;
+    --red:#e74c3c;
+    --wine:#800020;
+    --blue:#3498db;
+    --green:#27ae60;
+    --yellow:#f39c12;
+    --sh-s:1px 1px 0px rgba(44,44,44,.3);
+    --sh-m:2px 2px 0px rgba(44,44,44,.3);
+    --sh-l:3px 3px 0px rgba(44,44,44,.3);
+    --sh-h:2px 2px 0px rgba(44,44,44,.5);
+    --hand:"Segoe Print","Ink Free","Bradley Hand","Chalkboard SE","Marker Felt",Georgia,serif;
+    --hand-cn:"KaiTi","STKaiti","Kaiti SC","Kaiti TC","STSong",serif;
+    --line-2:2px solid var(--pencil);      /* 卡片以外的边框一律实线 */
+    --line-dash:2px dashed var(--pencil);  /* 手绘虚线只保留给中间卡片 */
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0}
+  body{
+    font-family:var(--hand-cn);
+    color:var(--pencil);
+    background:var(--paper);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ===== 纸张纹理（SVG，非渐变） ===== */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    opacity:.5;
+  }
+  /* ===== 交叉线条阴影材质 ===== */
+  .hatch{
+    position:absolute;z-index:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'><path d='M-1 1L1 -1M0 8L8 0M7 9L9 7' stroke='%232c2c2c' stroke-width='1'/><path d='M-1 7L1 9M0 0L8 8M7 -1L9 1' stroke='%232c2c2c' stroke-width='0.8' opacity='0.6'/></svg>");
+    opacity:.28;
+  }
+
+  /* ===== 纸张纹理线条 & 手绘下划线 ===== */
+  .wavy{
+    background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='9'><path d='M0 6Q15 1 30 6T60 6T90 6T120 6' fill='none' stroke='%232c2c2c' stroke-width='2' stroke-linecap='round'/></svg>");
+    background-repeat:repeat-x;background-position:0 100%;background-size:118px 9px;
+  }
+  .rule{height:0;border:0;border-top:var(--line-2);opacity:.55;margin:0}
+  .rule.wave{
+    height:8px;border:0;opacity:.6;
+    background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='8'><path d='M0 5Q11 1 22 5T45 5T68 5T90 5' fill='none' stroke='%232c2c2c' stroke-width='1.6' stroke-linecap='round'/></svg>");
+    background-repeat:repeat-x;background-size:90px 8px;
+  }
+
+  /* ===== shell ===== */
+  .app{position:relative;z-index:1;display:flex;flex-direction:column;
+    height:100vh;height:100dvh;height:var(--app-h,100dvh);
+    transform:translateY(var(--app-top,0px));
+    padding:calc(env(safe-area-inset-top,0px) + 12px) 14px calc(env(safe-area-inset-bottom,0px) + 10px);
+    max-width:820px;margin:0 auto;width:100%;}
+
+  /* ===== header ===== */
+  .top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+    padding:6px 2px 10px;border-bottom:var(--line-2);opacity:.98}
+  .brand{min-width:0}
+  .brand h1{margin:0;font-family:var(--hand);font-style:italic;font-weight:600;
+    font-size:19px;line-height:1.35;letter-spacing:.1px;
+    display:inline-block;padding-bottom:6px;transform:rotate(-.6deg)}
+  .brand p{margin:5px 0 0;font-size:12px;color:var(--pencil-2);font-family:var(--hand);font-style:italic}
+
+  /* 手绘虚线椭圆标注 */
+  .scribble{position:relative;display:inline-block}
+  .scribble svg{position:absolute;left:-12%;top:-24%;width:124%;height:150%;overflow:visible;pointer-events:none;opacity:.75}
+  .scribble svg ellipse{fill:none;stroke:var(--blue);stroke-width:1.6;stroke-dasharray:5 4}
+  .scribble svg .s2{stroke:var(--pencil);opacity:.35;stroke-dasharray:3 5}
+
+  /* ===== 方向切换 ===== */
+  .seg{display:flex;gap:6px;flex:0 0 auto}
+  .seg button{font-family:var(--hand-cn);font-size:12px;font-weight:600;color:var(--pencil);
+    background:var(--paper-3);border:var(--line-2);border-radius:2px;padding:0 11px;min-height:44px;
+    cursor:pointer;transition:background-color .12s linear,color .12s linear,opacity .2s linear,box-shadow .12s linear;
+    box-shadow:var(--sh-s);transform:rotate(.8deg)}
+  .seg button:nth-child(2){transform:rotate(-.9deg);background:transparent}
+  .seg button:hover{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-h)}
+  .seg button.on{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-m)}
+  .seg button:active{transform:rotate(-1.4deg) translateY(1px);box-shadow:none}
+  .seg button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+
+  /* ===== 板块导航 ===== */
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 12px;scrollbar-width:none;-ms-overflow-style:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;display:flex;align-items:center;gap:7px;
+    font-family:var(--hand-cn);font-size:13.5px;font-weight:600;color:var(--pencil);
+    background:var(--paper-3);border:var(--line-2);border-radius:2px;
+    padding:0 14px;min-height:44px;cursor:pointer;box-shadow:var(--sh-s);
+    transition:background-color .12s linear,color .12s linear,box-shadow .12s linear,transform .12s linear;
+    white-space:nowrap}
+  .tab:nth-child(3n+1){transform:rotate(-.8deg)}
+  .tab:nth-child(3n+2){transform:rotate(.6deg)}
+  .tab:nth-child(3n+3){transform:rotate(-.3deg)}
+  .tab .n{font-family:var(--hand);font-size:11.5px;color:var(--pencil-3);font-weight:600}
+  .tab:hover{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-h)}
+  .tab:hover .n{color:var(--paper-2)}
+  .tab.on{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-m);transform:rotate(-1.1deg)}
+  .tab.on .n{color:var(--paper-2)}
+  .tab:active{transform:rotate(-1.8deg) translateY(1px);box-shadow:none}
+  .tab:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .tab.fav{background:#fdf6e6}
+  /* 生词本里的「板块筛选条」复用同一排标签：
+     .back 是返回键（实线框、字色淡一档，视觉上退一格），.f 是可选的筛选项。
+     选中态用描边+浅底，和「当前板块」的实心高亮区分开，避免误读成在切换板块。 */
+  .tab.back{color:var(--pencil-2);background:transparent;box-shadow:none;
+    padding:0 11px;font-weight:600}
+  .tab.back:hover{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-h)}
+  .tab.f{background:var(--paper-3)}
+  .tab.f .n{color:var(--pencil-3)}
+  .tab.f.on{background:#fdf6e6;color:var(--pencil);border-color:var(--pencil);
+    box-shadow:inset 0 0 0 1.5px var(--pencil),var(--sh-s);transform:rotate(-1.1deg)}
+  .tab.f.on .n{color:var(--pencil-2);font-weight:800}
+
+  /* ===== 错题练习：顶部小标 + 组末收尾条 ===== */
+  /* 复习态顶部一条窄提示，说明现在练的是什么、还剩几个没答对，并给退出键 */
+  .rvbar{display:flex;align-items:center;gap:8px;margin:-6px 0 12px;
+    padding:5px 9px;border:2px solid var(--wine);border-radius:2px;
+    background:rgba(128,0,32,.06);transform:rotate(-.4deg);font-size:11.5px}
+  .rvbar-k{font-weight:700;color:var(--wine);flex:none;font-family:var(--hand-cn)}
+  .rvbar-n{color:var(--pencil-2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rvbar-n b{font-family:var(--hand);font-weight:800}
+  .rvbar-x{flex:none;border:0;background:transparent;cursor:pointer;
+    font-family:var(--hand-cn);font-size:11.5px;font-weight:700;color:var(--wine);
+    padding:3px 7px;border-radius:2px;text-decoration:underline;text-underline-offset:2px}
+  .rvbar-x:hover{background:rgba(128,0,32,.1)}
+  /* 组末收尾条：夹在操作区与翻页栏之间，不抢卡片主体的位置 */
+  .donebar{display:flex;align-items:center;gap:9px;margin-top:10px;
+    padding:8px 10px;border:2px solid var(--pencil-4);border-radius:2px;
+    background:var(--paper-3);transform:rotate(.35deg)}
+  .donebar .db-k{flex:1;min-width:0;font-size:12.5px;font-weight:600;color:var(--pencil-2);
+    font-family:var(--hand-cn);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .donebar .db-k b{font-family:var(--hand);font-size:14px;font-weight:800;color:var(--wine)}
+  .donebar .db-b{flex:none;cursor:pointer;font-family:var(--hand-cn);font-size:12.5px;font-weight:700;
+    color:var(--paper);background:var(--pencil);border:var(--line-2);border-radius:2px;
+    padding:7px 12px;box-shadow:var(--sh-s);
+    transition:transform .12s linear,box-shadow .12s linear}
+  .donebar .db-b:hover{box-shadow:var(--sh-h)}
+  .donebar .db-b:active{transform:translateY(1px);box-shadow:none}
+  .donebar .db-b.ghost{background:var(--paper);color:var(--pencil-2)}
+  .donebar.done{border-style:solid;border-color:var(--pencil-4);background:#eef7ee}
+  .donebar.done .db-k{color:#2f6b3a}
+  .donebar.rv{background:rgba(128,0,32,.06);border-color:var(--wine)}
+  .donebar.rv .db-k{color:var(--wine)}
+  /* 紧凑键盘态下把这两条收掉，不跟输入框抢高度 */
+  body.kbd .donebar,body.kbd .rvbar{display:none}
+
+  /* ===== stage / card ===== */
+  .stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;padding:2px}
+  .wrap{flex:1;min-height:0;position:relative}
+  .wrap .hatch{inset:9px -7px -9px 7px;border-radius:2px}
+  .card{position:relative;z-index:1;height:100%;border-radius:2px;border:var(--line-dash);
+    background:var(--paper);box-shadow:var(--sh-l);padding:16px 16px 12px;overflow:hidden;
+    display:flex;flex-direction:column;transform:rotate(-.35deg);will-change:transform;touch-action:pan-y}
+
+  .pbar{height:9px;border:2px dashed var(--pencil);border-radius:2px;opacity:.5;
+    position:relative;margin-bottom:16px;overflow:hidden;background:var(--paper-3)}
+  .pbar i{display:block;height:100%;width:0;background:var(--pencil);transition:width .25s linear}
+
+  .card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:34px}
+  .chip{font-size:12px;font-weight:600;color:var(--pencil-2);padding:5px 11px;border-radius:2px;
+    border:2px dashed var(--pencil-4);background:var(--paper-3);transform:rotate(-.7deg)}
+  .chipsel{appearance:none;-webkit-appearance:none;-moz-appearance:none;cursor:pointer;
+    font-family:var(--hand-cn);font-size:12px;font-weight:600;color:var(--pencil-2);
+    border:0;background:transparent;border-radius:2px;
+    max-width:40vw;padding:2px 20px 2px 6px;text-overflow:ellipsis;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='7' viewBox='0 0 9 7'%3E%3Cpath d='M1.5 1.5l3 3.2 3-3.2' fill='none' stroke='%235a5a5a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 5px center}
+  .chipsel:hover{background-color:rgba(44,44,44,.05)}
+  .chipsel:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+  .chipsel option{font-family:var(--hand-cn)}
+  .starbtn{border:var(--line-dash);background:var(--paper-3);width:46px;height:46px;border-radius:2px;
+    cursor:pointer;display:grid;place-items:center;box-shadow:var(--sh-s);transform:rotate(1deg);
+    transition:background-color .12s linear,box-shadow .12s linear,transform .12s linear,opacity .2s linear}
+  .starbtn svg{width:24px;height:24px}
+  .starbtn:hover{background:var(--pencil);box-shadow:var(--sh-h)}
+  .starbtn:hover svg .star-path{stroke:var(--paper)}
+  .starbtn:active{transform:rotate(-2deg) translateY(1px);box-shadow:none}
+  .starbtn:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .starbtn.on{background:#fdf6e6;border-color:var(--yellow)}
+  .starbtn.on svg .star-fill{fill:var(--yellow);opacity:1}
+  .starbtn.on svg .star-path{stroke:var(--yellow)}
+
+  .body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:15px;padding:8px 0;
+    overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  /* 滚动条：把默认的粗灰条+箭头换成半透明的细铅笔线（卡片内容区 & 数据面板） */
+  .body,.sheet{scrollbar-width:thin;scrollbar-color:rgba(44,44,44,.18) transparent}
+  .body::-webkit-scrollbar,.sheet::-webkit-scrollbar{width:4px;height:4px}
+  .body::-webkit-scrollbar-track,.sheet::-webkit-scrollbar-track{background:transparent}
+  .body::-webkit-scrollbar-thumb,.sheet::-webkit-scrollbar-thumb{
+    background:rgba(44,44,44,.18);border-radius:99px}
+  .body::-webkit-scrollbar-thumb:hover,.sheet::-webkit-scrollbar-thumb:hover{
+    background:rgba(44,44,44,.34)}
+  .body::-webkit-scrollbar-corner,.sheet::-webkit-scrollbar-corner{background:transparent}
+  .termrow{display:flex;align-items:center;justify-content:center;gap:12px;padding:2px 0}
+  .termwrap{position:relative;text-align:center}
+  .term{font-family:"Times New Roman",Times,var(--hand-cn),serif;font-style:italic;font-weight:600;color:var(--pencil);
+    font-size:clamp(26px,8.4vw,44px);line-height:1.2;word-break:break-word;display:inline-block;padding:0 3px 2px;letter-spacing:.2px}
+  .speak{border:var(--line-dash);background:var(--paper-3);width:46px;height:46px;border-radius:2px;
+    cursor:pointer;display:grid;place-items:center;flex:0 0 auto;box-shadow:var(--sh-s);transform:rotate(-1.4deg);
+    -webkit-appearance:none;appearance:none;touch-action:manipulation;padding:0;
+    transition:background-color .12s linear,box-shadow .12s linear,transform .12s linear}
+  .speak svg{width:22px;height:22px;stroke:var(--pencil);stroke-width:1.8;fill:none;
+    stroke-linecap:round;stroke-linejoin:round}
+  .speak:hover,.speak.on{background:var(--pencil);box-shadow:var(--sh-h)}
+  .speak:hover svg,.speak.on svg{stroke:var(--paper)}
+  .speak:active{transform:rotate(-2.4deg) translateY(1px);box-shadow:none}
+  .speak:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+
+  .ask{display:flex;flex-direction:column;gap:13px;max-width:470px;margin:0 auto;width:100%}
+  .inp{width:100%;border:var(--line-dash);border-radius:2px;background:var(--paper-3);
+    padding:14px 16px;font-size:17px;font-family:var(--hand-cn);color:var(--pencil);
+    text-align:center;outline:none;min-height:52px;box-shadow:var(--sh-s);
+    transition:box-shadow .12s linear}
+  .inp::placeholder{color:var(--pencil-4);font-family:var(--hand);font-style:italic;font-size:14px}
+  .inp:focus,.inp:focus-visible{outline:none;
+    box-shadow:0 0 0 5px rgba(44,44,44,.09), 2px 2px 0 rgba(44,44,44,.3)}
+
+  .ops{display:flex;gap:10px}
+  .btn{flex:1;border:var(--line-dash);border-radius:2px;background:transparent;color:var(--pencil);
+    font-family:var(--hand-cn);font-size:15.5px;font-weight:600;cursor:pointer;
+    padding:13px 16px;min-height:50px;box-shadow:var(--sh-m);
+    transition:background-color .12s linear,color .12s linear,box-shadow .12s linear,transform .12s linear,opacity .2s linear}
+  .btn:hover{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-h)}
+  .btn:active{transform:rotate(-1.1deg) translateY(2px);box-shadow:none}
+  .btn:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .btn.primary{background:var(--pencil);color:var(--paper)}
+  .btn.primary:hover{background:#1b1b1b;box-shadow:var(--sh-h)}
+  .btn.ghost{flex:0 0 auto;padding:13px 18px;background:var(--paper-3)}
+
+  /* ===== 结果区（非嵌套卡片：仅用虚线/波浪下划线 + 印章） ===== */
+  .result{display:flex;flex-direction:column;gap:13px;max-width:470px;margin:0 auto;width:100%}
+  .stamp{align-self:center;display:inline-block;font-family:var(--hand-cn);font-size:15px;font-weight:700;
+    padding:7px 16px;border-radius:2px;border:2px dashed currentColor;background:transparent;
+    transform:rotate(-1.6deg)}
+  .stamp.ok{color:var(--green)}
+  .stamp.no{color:var(--red)}
+  .stamp.skip{color:var(--pencil-2)}
+  .kv{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding-bottom:6px}
+  .kv .k{font-family:var(--hand);font-style:italic;font-size:13px;color:var(--pencil-3);flex:0 0 auto}
+  .kv .v{font-size:16px;font-weight:600;color:var(--pencil);word-break:break-word}
+  .kv.answer{padding-bottom:8px}
+  .kv.answer .v{font-size:17px}
+
+  /* 词条介绍：只在译错/没作答时出现，做成一张淡淡的手绘便签 */
+  .introbox{margin-top:12px;padding:11px 13px 12px;border:var(--line-dash);border-radius:2px;
+    background:var(--paper-3);position:relative;max-width:100%}
+  .introbox::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--pencil-4);border-radius:2px 0 0 2px}
+  .introbox .ik{display:block;font-family:var(--hand);font-style:italic;font-size:12.5px;
+    color:var(--pencil-3);margin-bottom:5px;letter-spacing:.02em}
+  .introbox .iv{margin:0;font-size:14px;line-height:1.92;color:var(--pencil-2);
+    font-family:var(--hand-cn);text-indent:0;word-break:break-word}
+
+  .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    text-align:center;color:var(--pencil-2);padding:22px}
+  .empty svg{width:64px;height:64px;opacity:.6}
+  .empty p{margin:0;font-size:14px;line-height:1.75;font-family:var(--hand-cn)}
+
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;
+    padding-top:12px;border-top:2px dashed var(--pencil-4)}
+  .navbtn{border:var(--line-dash);border-radius:2px;background:var(--paper-3);color:var(--pencil);
+    font-family:var(--hand-cn);font-size:13.5px;font-weight:600;padding:0 15px;min-height:44px;
+    cursor:pointer;box-shadow:var(--sh-s);white-space:nowrap;
+    transition:background-color .12s linear,color .12s linear,box-shadow .12s linear,transform .12s linear}
+  .navbtn:hover{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-h)}
+  .navbtn:active{transform:rotate(-1.3deg) translateY(1px);box-shadow:none}
+  .navbtn:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .navbtn:disabled{opacity:.35;cursor:default;box-shadow:none}
+  .navbtn:disabled:hover{background:var(--paper-3);color:var(--pencil)}
+  .counter{font-family:var(--hand);font-style:italic;font-size:14px;font-weight:600;color:var(--pencil-2)}
+
+  .bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 2px 0}
+  .stats{font-size:12px;color:var(--pencil-2);line-height:1.55;flex:1;min-width:0}
+  .stats b{color:var(--pencil);font-weight:700}
+  .tools{display:flex;gap:7px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+  .tool{border:var(--line-2);background:var(--paper-3);color:var(--pencil);font-family:var(--hand-cn);
+    font-size:12px;font-weight:600;padding:0 12px;min-height:44px;border-radius:2px;cursor:pointer;
+    box-shadow:var(--sh-s);white-space:nowrap;
+    transition:background-color .12s linear,color .12s linear,box-shadow .12s linear,transform .12s linear}
+  .tool:nth-child(1){transform:rotate(-.9deg)}
+  .tool:nth-child(2){transform:rotate(.7deg)}
+  .tool:nth-child(3){transform:rotate(-.4deg)}
+  .tool:nth-child(4){transform:rotate(.8deg)}
+  .tool:hover{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-h)}
+  .tool:active{transform:rotate(-1.5deg) translateY(1px);box-shadow:none}
+  .tool:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .tool.on{background:var(--pencil);color:var(--paper)}
+  .tool .cnt{font-family:var(--hand);font-style:italic;font-size:11px;color:var(--pencil-3);margin-left:5px}
+  .tool:hover .cnt{color:var(--paper-2)}
+
+  /* ===== 导出面板（手绘便签式底部弹层） ===== */
+  .sheetmask{position:fixed;inset:0;background:rgba(44,44,44,.32);z-index:20;
+    opacity:0;pointer-events:none;transition:opacity .18s linear}
+  .sheetmask.show{opacity:1;pointer-events:auto}
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;max-width:520px;margin:0 auto;
+    background:var(--paper);border:var(--line-2);border-bottom:none;border-radius:2px 2px 0 0;
+    box-shadow:0 -3px 0 rgba(44,44,44,.28);
+    padding:16px 16px calc(env(safe-area-inset-bottom,0px) + 16px);
+    transform:translateY(105%) rotate(-.3deg);transition:transform .22s ease-out;
+    max-height:82vh;overflow-y:auto;overscroll-behavior:contain}
+  .sheet.show{transform:translateY(0) rotate(-.3deg)}
+  .sheet-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+  .sheet-h h2{margin:0;font-family:var(--hand-cn);font-size:17px;font-weight:700;color:var(--pencil)}
+  .sheet-h .x{border:none;background:transparent;cursor:pointer;font-size:22px;line-height:1;
+    color:var(--pencil-2);padding:6px 8px;font-family:var(--hand)}
+  .sheet-h .x:hover{color:var(--pencil)}
+  .sheet-sub{margin:0 0 14px;font-family:var(--hand);font-style:italic;font-size:12.5px;
+    color:var(--pencil-3);line-height:1.5}
+  .sheet-opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:center;gap:12px;text-align:left;width:100%;
+    border:var(--line-2);border-radius:2px;background:var(--paper-3);cursor:pointer;
+    padding:13px 14px;min-height:58px;box-shadow:var(--sh-s);
+    transition:background-color .12s linear,box-shadow .12s linear,transform .12s linear}
+  .opt:hover{background:var(--paper-2);box-shadow:var(--sh-m)}
+  .opt:active{transform:translateY(1px);box-shadow:none}
+  .opt:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .opt .ico{flex:0 0 auto;width:34px;height:34px;display:grid;place-items:center;
+    border:2px solid var(--pencil-3);border-radius:2px;background:var(--paper)}
+  .opt .ico svg{width:19px;height:19px;stroke:var(--pencil);stroke-width:1.8;fill:none;
+    stroke-linecap:round;stroke-linejoin:round}
+  .opt .txt{flex:1;min-width:0}
+  .opt .txt b{display:block;font-family:var(--hand-cn);font-size:14.5px;font-weight:700;
+    color:var(--pencil);margin-bottom:2px}
+  .opt .txt span{display:block;font-size:11.5px;color:var(--pencil-3);line-height:1.45}
+  .opt[disabled]{opacity:.42;cursor:default;box-shadow:none}
+  .opt[disabled]:hover{background:var(--paper-3);box-shadow:none}
+  .sheet-prev{margin-top:14px;border-top:2px solid var(--pencil-4);padding-top:12px}
+  .sheet-prev .k{font-family:var(--hand);font-style:italic;font-size:11.5px;color:var(--pencil-3)}
+  .sheet-prev pre{margin:6px 0 0;font-family:var(--hand);font-size:11.5px;color:var(--pencil-2);
+    background:var(--paper-2);border:2px solid var(--pencil-4);border-radius:2px;
+    padding:10px 11px;max-height:132px;overflow:auto;white-space:pre;line-height:1.55}
+
+  /* ===== 导入相关 ===== */
+  .sheet-tabs{display:flex;gap:8px;margin-bottom:14px}
+  .stab{flex:1;border:var(--line-2);border-radius:2px;background:var(--paper-3);color:var(--pencil);
+    font-family:var(--hand-cn);font-size:13.5px;font-weight:600;padding:0 10px;min-height:42px;
+    cursor:pointer;box-shadow:var(--sh-s);white-space:nowrap;
+    transition:background-color .12s linear,color .12s linear,box-shadow .12s linear}
+  .stab:hover{background:var(--paper-2)}
+  .stab.on{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-m)}
+  .stab:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .pane[hidden]{display:none}
+
+  .dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    width:100%;border:2px solid var(--pencil-3);border-radius:2px;background:var(--paper-3);
+    padding:22px 16px;min-height:118px;cursor:pointer;text-align:center;
+    transition:background-color .12s linear,border-color .12s linear}
+  .dropzone:hover,.dropzone.over{background:var(--paper-2);border-color:var(--pencil)}
+  .dropzone:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .dropzone svg{width:30px;height:30px;stroke:var(--pencil-2);stroke-width:1.7;fill:none;
+    stroke-linecap:round;stroke-linejoin:round}
+  .dropzone b{font-family:var(--hand-cn);font-size:14px;font-weight:700;color:var(--pencil)}
+  .dropzone span{font-size:11.5px;color:var(--pencil-3);line-height:1.5}
+  .dropzone.loaded{border-style:solid;border-color:var(--green);background:#f3f8f2}
+  .dropzone.loaded svg{stroke:var(--green)}
+
+  .ta{width:100%;border:var(--line-2);border-radius:2px;background:var(--paper-3);
+    padding:12px 13px;font-family:var(--hand);font-size:12.5px;color:var(--pencil);
+    min-height:128px;resize:vertical;outline:none;line-height:1.6;box-shadow:var(--sh-s)}
+  .ta:focus,.ta:focus-visible{outline:none;box-shadow:0 0 0 5px rgba(44,44,44,.09), 2px 2px 0 rgba(44,44,44,.3)}
+  .ta::placeholder{color:var(--pencil-4);font-style:italic}
+
+  .hintline{margin:10px 0 0;font-family:var(--hand);font-style:italic;font-size:11.5px;
+    color:var(--pencil-3);line-height:1.6}
+
+  /* 导入预览结论 */
+  .report{margin-top:14px;border-top:2px solid var(--pencil-4);padding-top:12px}
+  .report[hidden]{display:none}
+  .report .rrow{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+    font-family:var(--hand-cn);font-size:13px;color:var(--pencil-2);padding:4px 0}
+  .report .rrow b{font-family:var(--hand);font-size:15px;color:var(--pencil)}
+  .report .rrow b.new{color:var(--green)}
+  .report .rrow b.dup{color:var(--pencil-3)}
+  .report .rrow b.bad{color:var(--red)}
+  .report .rnote{margin:8px 0 0;font-size:11.5px;color:var(--pencil-3);line-height:1.6;
+    font-family:var(--hand-cn)}
+  .report .rerr{margin:8px 0 0;font-size:12px;color:var(--red);line-height:1.6;font-family:var(--hand-cn)}
+
+  /* 合并方式选择 */
+  .modes{display:flex;gap:8px;margin-top:12px}
+  .mode{flex:1;border:var(--line-2);border-radius:2px;background:var(--paper-3);color:var(--pencil);
+    font-family:var(--hand-cn);font-size:12.5px;font-weight:600;padding:10px 8px;min-height:52px;
+    cursor:pointer;box-shadow:var(--sh-s);text-align:center;line-height:1.35;
+    transition:background-color .12s linear,color .12s linear,box-shadow .12s linear}
+  .mode:hover{background:var(--paper-2)}
+  .mode.on{background:var(--pencil);color:var(--paper);box-shadow:var(--sh-m)}
+  .mode:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .mode small{display:block;font-family:var(--hand);font-style:italic;font-size:10.5px;
+    font-weight:400;opacity:.75;margin-top:2px}
+
+  .doimport{width:100%;margin-top:14px;border:var(--line-2);border-radius:2px;
+    background:var(--pencil);color:var(--paper);font-family:var(--hand-cn);font-size:15px;
+    font-weight:700;padding:14px;min-height:52px;cursor:pointer;box-shadow:var(--sh-m);
+    transition:background-color .12s linear,box-shadow .12s linear,transform .12s linear}
+  .doimport:hover{background:#1b1b1b;box-shadow:var(--sh-h)}
+  .doimport:active{transform:translateY(2px);box-shadow:none}
+  .doimport:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .doimport[disabled]{opacity:.4;cursor:default;box-shadow:none}
+  .doimport[disabled]:hover{background:var(--pencil);box-shadow:none}
+
+  .swipehint{text-align:center;font-family:var(--hand);font-style:italic;font-size:12px;color:var(--pencil-3);padding-top:3px}
+  .toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);transform:translate(-50%,12px) rotate(-1deg);
+    background:var(--paper);color:var(--pencil);border:var(--line-2);border-radius:2px;
+    font-family:var(--hand-cn);font-size:13px;font-weight:600;padding:11px 18px;box-shadow:var(--sh-m);
+    opacity:0;pointer-events:none;transition:opacity .16s linear,transform .16s linear;z-index:9}
+  .toast.show{opacity:1;transform:translate(-50%,0) rotate(-1deg)}
+
+  /* ===== 移动端软键盘适配：聚焦输入时收紧页面，避免被键盘挤乱 ===== */
+  /* 三种形态：
+     1) body.kbd.asking          —— 答题中 + 键盘弹起：最紧凑，只留单词/输入/按钮
+     2) body.kbd.correct         —— 答对后 + 键盘仍在：保持紧凑（不把键盘挤走），只加一行「译对了」
+     3) 无 kbd 类                —— 完整界面（答错时必须回到这个形态，让用户看清楚参考答案） */
+  body.kbd .tabs,body.kbd .swipehint,body.kbd .foot,body.kbd .brand p{display:none}
+  body.kbd.asking .bottom{display:none}
+  /* 答对时保持紧凑：隐藏底部进度条，避免把键盘顶走 */
+  body.kbd.correct .bottom{display:none}
+  /* 答错后退出紧凑态，完整界面自然显示 .bottom */
+  body.kbd .top{padding-bottom:8px}
+  body.kbd .card{padding:12px 12px 8px}
+  body.kbd .pbar{margin-bottom:10px}
+  body.kbd .card-top{min-height:38px}
+  body.kbd .starbtn{width:40px;height:40px}
+  body.kbd .starbtn svg{width:21px;height:21px}
+  body.kbd .body{justify-content:flex-start;gap:12px;padding:4px 0}
+  body.kbd .term{font-size:clamp(23px,7.4vw,36px)}
+  body.kbd .speak{width:42px;height:42px}
+  body.kbd .speak svg{width:20px;height:20px}
+  body.kbd .inp{min-height:48px;padding:12px 14px}
+  body.kbd .btn{min-height:46px;padding:11px 14px}
+
+  /* ===== 答对后的极简形态：只保留一枚「译对了」印章 ===== */
+  /* 隐藏答案明细与操作区，只留印章；用户仍可左右滑动/回车进入下一词 */
+  body.kbd.correct .result .kv{display:none}
+  body.kbd.correct .result .stamp{margin:0 auto}
+  body.kbd.correct .ops{display:none}
+  body.kbd.correct .body{justify-content:center;gap:14px;padding:0}
+
+  @media (min-width:760px){
+    .app{padding-top:20px;padding-bottom:18px}
+    .brand h1{font-size:22px}
+    .term{font-size:clamp(30px,4.2vw,46px)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body class="asking">
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <h1 class="wavy">English Terms 记忆卡</h1>
+      <p>看单词 · 写译文</p>
+    </div>
+    <div class="seg" id="dirSeg">
+      <button data-dir="en2cn" class="on">英 → 中</button>
+      <button data-dir="cn2en">中 → 英</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="板块导航"></nav>
+
+  <main class="stage">
+    <div class="wrap">
+      <span class="hatch"></span>
+      <section class="card" id="card"></section>
+    </div>
+    <div class="swipehint" id="swipehint">← 左右滑动翻页 · 回车确认 →</div>
+  </main>
+
+  <div class="bottom">
+    <div class="stats" id="stats"></div>
+    <div class="tools">
+      <button class="tool" id="shuffleBtn">打乱顺序</button>
+      <button class="tool" id="exportBtn">导出<span class="cnt" id="exportCnt"></span></button>
+      <button class="tool" id="importBtn">导入</button>
+      <button class="tool" id="resetBtn">重置进度</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- 数据面板（导出 / 导入） -->
+<div class="sheetmask" id="sheetMask"></div>
+<section class="sheet" id="dataSheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden="true">
+  <div class="sheet-h">
+    <h2 id="sheetTitle">同步数据</h2>
+    <button class="x" id="sheetClose" aria-label="关闭">×</button>
+  </div>
+
+  <div class="sheet-tabs" role="tablist" aria-label="导出或导入">
+    <button class="stab on" id="tabExport" data-pane="paneExport" role="tab" aria-selected="true">导出</button>
+    <button class="stab" id="tabImport" data-pane="paneImport" role="tab" aria-selected="false">导入</button>
+  </div>
+
+  <!-- ===== 导出 ===== -->
+  <div class="pane" id="paneExport" role="tabpanel" aria-labelledby="tabExport">
+    <p class="sheet-sub" id="exportSub"></p>
+    <div class="sheet-opts">
+      <button class="opt" id="expCsv">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9.5h18M9 9.5V20M15 9.5V20"/></svg></span>
+        <span class="txt"><b>表格 (CSV)</b><span> Excel / WPS / 石墨可直接打开，含板块、类别、中英对照</span></span>
+      </button>
+      <button class="opt" id="expTxt">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/></svg></span>
+        <span class="txt"><b>纯文本 (TXT)</b><span>Anki / 墨墨 / 不背单词 可导入的「英文,中文」逐行格式</span></span>
+      </button>
+      <button class="opt" id="expJson">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H7a3 3 0 0 0-3 3v2a3 3 0 0 1-3 3 3 3 0 0 1 3 3v2a3 3 0 0 0 3 3h2"/><path d="M15 4h2a3 3 0 0 1 3 3v2a3 3 0 0 0 3 3 3 3 0 0 0-3 3v2a3 3 0 0 1-3 3h-2"/></svg></span>
+        <span class="txt"><b>备份 (JSON)</b><span>完整数据（含答题记录），可留作备份或换机迁移 —— 推荐用这个同步</span></span>
+      </button>
+      <button class="opt" id="expCopy">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></span>
+        <span class="txt"><b>复制到剪贴板</b><span>手机上下载不灵时的备用方案，直接粘到另一台设备的「导入」里</span></span>
+      </button>
+    </div>
+    <div class="sheet-prev" id="exportPrevWrap">
+      <span class="k">预览（前几行）</span>
+      <pre id="exportPrev"></pre>
+    </div>
+  </div>
+
+  <!-- ===== 导入 ===== -->
+  <div class="pane" id="paneImport" role="tabpanel" aria-labelledby="tabImport" hidden>
+    <p class="sheet-sub" id="importSub">选一个文件，或把内容粘贴到下面。支持本应用导出的 <b>JSON / CSV / TXT</b>，也支持「英文,中文」逐行文本。<br>词库里没有的单词会存成 <b>自建词</b>，照样能做成卡片学习。</p>
+
+    <button class="dropzone" id="dropzone" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+      <b id="dropTitle">点击选择文件</b>
+      <span id="dropHint">支持 .json / .csv / .txt，也可以把文件拖进来</span>
+    </button>
+    <input type="file" id="fileInput" accept=".json,.csv,.txt,.tsv,text/plain,application/json,text/csv" hidden>
+
+    <p class="hintline">没有文件？把导出时复制的文本直接粘到这里也可以：</p>
+    <textarea class="ta" id="importText" placeholder="Aristotle,亚里士多德&#10;Plato,柏拉图&#10;…"></textarea>
+
+    <div class="modes" role="radiogroup" aria-label="导入方式">
+      <button class="mode on" id="modeMerge" role="radio" aria-checked="true">合并<small>保留现有生词本，只补新的</small></button>
+      <button class="mode" id="modeReplace" role="radio" aria-checked="false">替换<small>清空后按导入内容重建</small></button>
+    </div>
+
+    <div class="report" id="importReport" hidden>
+      <div class="rrow"><span>可识别的词条</span><b id="rTotal">0</b></div>
+      <div class="rrow"><span>新增收藏</span><b class="new" id="rNew">0</b></div>
+      <div class="rrow"><span>新增自建词</span><b class="new" id="rCustom">0</b></div>
+      <div class="rrow"><span>已在自建词表</span><b class="dup" id="rCustomDup">0</b></div>
+      <div class="rrow"><span>已在生词本</span><b class="dup" id="rDup">0</b></div>
+      <div class="rrow"><span>无法建卡</span><b class="bad" id="rMiss">0</b></div>
+      <p class="rnote" id="rNote"></p>
+      <p class="rerr" id="rErr" hidden></p>
+    </div>
+
+    <button class="doimport" id="doImport" disabled>确认导入</button>
+  </div>
+</section>
+
+<script>
+const DATA = [{"key":"names","title":"人名","en":"Names","words":[{"cn":"亚里士多德","en":"Aristotle","g":"哲学家/思想家"},{"cn":"柏拉图","en":"Plato","g":"哲学家/思想家"},{"cn":"苏格拉底","en":"Socrates","g":"哲学家/思想家"},{"cn":"马克思","en":"Marx","g":"哲学家/思想家"},{"cn":"亚当·斯密","en":"Adam Smith","g":"哲学家/思想家"},{"cn":"卢梭","en":"Rousseau","g":"哲学家/思想家"},{"cn":"康德","en":"Immanuel Kant","g":"哲学家/思想家"},{"cn":"洛克","en":"Locke","g":"哲学家/思想家"},{"cn":"黑格尔","en":"Hegel","g":"哲学家/思想家"},{"cn":"弗洛伊德","en":"Freud","g":"哲学家/思想家"},{"cn":"泰勒斯","en":"Thales","g":"哲学家/思想家"},{"cn":"伏尔泰","en":"Voltaire","g":"哲学家/思想家"},{"cn":"阿基米德","en":"Archimedes","g":"哲学家/思想家"},{"cn":"尼采","en":"Nietzsche","g":"哲学家/思想家"},{"cn":"达尔文","en":"Darwin","g":"科学家"},{"cn":"牛顿","en":"Newton","g":"科学家"},{"cn":"爱因斯坦","en":"Einstein","g":"科学家"},{"cn":"伽利略","en":"Galileo","g":"科学家"},{"cn":"玛丽·居里","en":"Marie Curie","g":"科学家"},{"cn":"诺贝尔","en":"Nobel","g":"科学家"},{"cn":"詹姆斯·瓦特","en":"James Watt","g":"科学家"},{"cn":"哥白尼","en":"Copernicus","g":"科学家"},{"cn":"莫尔斯","en":"Morse","g":"科学家"},{"cn":"爱迪生","en":"Edison","g":"科学家"},{"cn":"哈勃","en":"Hubble","g":"科学家"},{"cn":"霍金","en":"Hawking","g":"科学家"},{"cn":"法拉第","en":"Faraday","g":"科学家"},{"cn":"亚历山大·贝尔","en":"Alexander Bell","g":"科学家"},{"cn":"艾伦·图灵","en":"Alan Turing","g":"科学家"},{"cn":"高斯","en":"Gauss","g":"科学家"},{"cn":"开普勒","en":"Kepler","g":"科学家"},{"cn":"丘吉尔","en":"Churchill","g":"时政/其他人物"},{"cn":"林肯","en":"Lincoln","g":"时政/其他人物"},{"cn":"富兰克林","en":"Franklin","g":"时政/其他人物"},{"cn":"杰斐逊","en":"Thomas Jefferson","g":"时政/其他人物"},{"cn":"华盛顿(人名)","en":"Washington","g":"时政/其他人物"},{"cn":"富兰克林·罗斯福","en":"Franklin Roosevelt","g":"时政/其他人物"},{"cn":"玛格丽特·撒切尔","en":"Margaret Thatcher","g":"时政/其他人物"},{"cn":"马丁·路德·金","en":"Martin Luther King","g":"时政/其他人物"},{"cn":"阿诺德·施瓦辛格","en":"Arnold Schwarzenegger","g":"时政/其他人物"},{"cn":"约翰·洛克菲勒","en":"John Rockefeller","g":"时政/其他人物"},{"cn":"卡内基","en":"Carnegie","g":"时政/其他人物"},{"cn":"华特·迪士尼","en":"Walt Disney","g":"时政/其他人物"},{"cn":"比尔·盖茨","en":"Bill Gates","g":"时政/其他人物"},{"cn":"贝利","en":"Pele","g":"时政/其他人物"},{"cn":"迈克尔·乔丹","en":"Michael Jordan","g":"时政/其他人物"},{"cn":"兰斯·阿姆斯特朗","en":"Lance Armstrong","g":"时政/其他人物"},{"cn":"莎士比亚","en":"Shakespeare","g":"文学家/艺术家"},{"cn":"狄更斯","en":"Dickens","g":"文学家/艺术家"},{"cn":"爱默生","en":"Emerson","g":"文学家/艺术家"},{"cn":"梭罗","en":"Thoreau","g":"文学家/艺术家"},{"cn":"毕加索","en":"Picasso","g":"文学家/艺术家"},{"cn":"达·芬奇","en":"Da Vinci","g":"文学家/艺术家"},{"cn":"梵高","en":"Van Gogh","g":"文学家/艺术家"},{"cn":"克劳德·莫奈","en":"Claude Monet","g":"文学家/艺术家"},{"cn":"贝多芬","en":"Beethoven","g":"文学家/艺术家"},{"cn":"莫扎特","en":"Mozart","g":"文学家/艺术家"},{"cn":"巴赫","en":"Bach","g":"文学家/艺术家"},{"cn":"肖邦","en":"Chopin","g":"文学家/艺术家"},{"cn":"舒伯特","en":"Schubert","g":"文学家/艺术家"},{"cn":"约翰·施特劳斯","en":"Johann Strauss","g":"文学家/艺术家"},{"cn":"海明威","en":"Hemingway","g":"文学家/艺术家"},{"cn":"海伦·凯勒","en":"Helen Keller","g":"文学家/艺术家"},{"cn":"欧·亨利","en":"O.Henry","g":"文学家/艺术家"},{"cn":"庞德","en":"Pound","g":"文学家/艺术家"},{"cn":"奥尼尔","en":"O'Neill","g":"文学家/艺术家"},{"cn":"奥威尔","en":"Orwell","g":"文学家/艺术家"},{"cn":"巴尔扎克","en":"Balzac","g":"文学家/艺术家"},{"cn":"波德莱尔","en":"Baudelaire","g":"文学家/艺术家"},{"cn":"博尔赫斯","en":"Borges","g":"文学家/艺术家"},{"cn":"大仲马","en":"Dumas","g":"文学家/艺术家"},{"cn":"狄更生","en":"Dickinson","g":"文学家/艺术家"},{"cn":"福克纳","en":"Faulkner","g":"文学家/艺术家"},{"cn":"福楼拜","en":"Flaubert","g":"文学家/艺术家"},{"cn":"歌德","en":"Goethe","g":"文学家/艺术家"},{"cn":"海勒","en":"Heller","g":"文学家/艺术家"},{"cn":"荷马","en":"Homer","g":"文学家/艺术家"},{"cn":"杰克·伦敦","en":"Jack London","g":"文学家/艺术家"},{"cn":"罗斯","en":"Roth","g":"文学家/艺术家"},{"cn":"莫泊桑","en":"Maupassant","g":"文学家/艺术家"},{"cn":"默多克","en":"Murdoch","g":"文学家/艺术家"},{"cn":"左拉","en":"Zola","g":"文学家/艺术家"},{"cn":"黎里","en":"Lyly","g":"文学家/艺术家"},{"cn":"皮尔","en":"Peele","g":"文学家/艺术家"},{"cn":"格林","en":"Greene","g":"文学家/艺术家"},{"cn":"马洛","en":"Marlowe","g":"文学家/艺术家"},{"cn":"基德","en":"Kyd","g":"文学家/艺术家"},{"cn":"T.S. 艾略特","en":"T.S. Eliot","g":"文学家/艺术家"},{"cn":"诺姆·乔姆斯基","en":"Noam Chomsky","g":"文学家/艺术家"},{"cn":"詹姆斯·艾伦","en":"James Allen","g":"文学家/艺术家"},{"cn":"拿破仑","en":"Napoleon","g":"文学家/艺术家"},{"cn":"曼德拉","en":"Mandela","g":"文学家/艺术家"},{"cn":"斯大林","en":"Stalin","g":"文学家/艺术家"},{"cn":"达尔文主义者","en":"Darwinian","g":"文学家/艺术家"}]},{"key":"places","title":"地名","en":"Place Names","words":[{"cn":"美国","en":"the United States / America","g":"国家/地区"},{"cn":"英国","en":"the United Kingdom / Britain","g":"国家/地区"},{"cn":"加拿大","en":"Canada","g":"国家/地区"},{"cn":"澳大利亚","en":"Australia","g":"国家/地区"},{"cn":"德国","en":"Germany","g":"国家/地区"},{"cn":"法国","en":"France","g":"国家/地区"},{"cn":"意大利","en":"Italy","g":"国家/地区"},{"cn":"西班牙","en":"Spain","g":"国家/地区"},{"cn":"俄罗斯","en":"Russia","g":"国家/地区"},{"cn":"印度","en":"India","g":"国家/地区"},{"cn":"巴西","en":"Brazil","g":"国家/地区"},{"cn":"墨西哥","en":"Mexico","g":"国家/地区"},{"cn":"韩国","en":"South Korea","g":"国家/地区"},{"cn":"日本","en":"Japan","g":"国家/地区"},{"cn":"新加坡","en":"Singapore","g":"国家/地区"},{"cn":"新西兰","en":"New Zealand","g":"国家/地区"},{"cn":"奥地利","en":"Austria","g":"国家/地区"},{"cn":"瑞典","en":"Sweden","g":"国家/地区"},{"cn":"瑞士","en":"Switzerland","g":"国家/地区"},{"cn":"葡萄牙","en":"Portugal","g":"国家/地区"},{"cn":"希腊","en":"Greece","g":"国家/地区"},{"cn":"欧洲","en":"Europe","g":"大洲/大洋/区域"},{"cn":"亚洲","en":"Asia","g":"大洲/大洋/区域"},{"cn":"非洲","en":"Africa","g":"大洲/大洋/区域"},{"cn":"北美洲","en":"North America","g":"大洲/大洋/区域"},{"cn":"南美洲","en":"South America","g":"大洲/大洋/区域"},{"cn":"大洋洲","en":"Oceania","g":"大洲/大洋/区域"},{"cn":"南极洲","en":"Antarctica","g":"大洲/大洋/区域"},{"cn":"中东","en":"the Middle East","g":"大洲/大洋/区域"},{"cn":"西方国家","en":"the West","g":"大洲/大洋/区域"},{"cn":"西欧","en":"Western Europe","g":"大洲/大洋/区域"},{"cn":"西德","en":"west Germany","g":"大洲/大洋/区域"},{"cn":"伊比利亚半岛","en":"Iberian Peninsula","g":"大洲/大洋/区域"},{"cn":"旧大陆(欧洲)","en":"the Old Continent","g":"大洲/大洋/区域"},{"cn":"新大陆(美洲)","en":"the New World","g":"大洲/大洋/区域"},{"cn":"太平洋","en":"the Pacific Ocean","g":"大洲/大洋/区域"},{"cn":"大西洋","en":"the Atlantic Ocean","g":"大洲/大洋/区域"},{"cn":"印度洋","en":"the Indian Ocean","g":"大洲/大洋/区域"},{"cn":"北冰洋","en":"the Arctic Ocean","g":"大洲/大洋/区域"},{"cn":"纽约","en":"New York","g":"城市/州/省份"},{"cn":"华盛顿(地名)","en":"Washington","g":"城市/州/省份"},{"cn":"芝加哥","en":"Chicago","g":"城市/州/省份"},{"cn":"洛杉矶","en":"Los Angeles","g":"城市/州/省份"},{"cn":"波士顿","en":"Boston","g":"城市/州/省份"},{"cn":"旧金山","en":"San Francisco","g":"城市/州/省份"},{"cn":"西雅图","en":"Seattle","g":"城市/州/省份"},{"cn":"费城","en":"Philadelphia","g":"城市/州/省份"},{"cn":"加利福尼亚州","en":"California","g":"城市/州/省份"},{"cn":"得克萨斯州","en":"Texas","g":"城市/州/省份"},{"cn":"伦敦","en":"London","g":"城市/州/省份"},{"cn":"巴黎","en":"Paris","g":"城市/州/省份"},{"cn":"柏林","en":"Berlin","g":"城市/州/省份"},{"cn":"罗马","en":"Rome","g":"城市/州/省份"},{"cn":"莫斯科","en":"Moscow","g":"城市/州/省份"},{"cn":"多伦多","en":"Toronto","g":"城市/州/省份"},{"cn":"悉尼","en":"Sydney","g":"城市/州/省份"},{"cn":"东京","en":"Tokyo","g":"城市/州/省份"},{"cn":"香港","en":"Hong Kong","g":"城市/州/省份"},{"cn":"缅因州","en":"Maine","g":"城市/州/省份"},{"cn":"佐治亚州","en":"Georgia","g":"城市/州/省份"},{"cn":"利物浦","en":"Liverpool","g":"城市/州/省份"},{"cn":"曼彻斯特","en":"Manchester","g":"城市/州/省份"},{"cn":"谢菲尔德","en":"Sheffield","g":"城市/州/省份"},{"cn":"伯明翰","en":"Birmingham","g":"城市/州/省份"},{"cn":"考文垂","en":"Coventry","g":"城市/州/省份"},{"cn":"利兹","en":"Leeds","g":"城市/州/省份"},{"cn":"苏格兰","en":"Scotland","g":"城市/州/省份"},{"cn":"爱丁堡","en":"Edinburgh","g":"城市/州/省份"},{"cn":"威尔士","en":"Wales","g":"城市/州/省份"},{"cn":"爱尔兰","en":"Ireland","g":"城市/州/省份"},{"cn":"都柏林","en":"Dublin","g":"城市/州/省份"},{"cn":"堪培拉","en":"Canberra","g":"城市/州/省份"},{"cn":"昆士兰州","en":"Queensland","g":"城市/州/省份"},{"cn":"新南威尔士州","en":"New South Wales","g":"城市/州/省份"},{"cn":"南澳大利亚州","en":"South Australia","g":"城市/州/省份"},{"cn":"维多利亚州","en":"Victoria","g":"城市/州/省份"},{"cn":"墨尔本","en":"Melbourne","g":"城市/州/省份"},{"cn":"珀斯","en":"Perth","g":"城市/州/省份"},{"cn":"惠灵顿","en":"Wellington","g":"城市/州/省份"},{"cn":"奥克兰","en":"Auckland","g":"城市/州/省份"},{"cn":"基督城","en":"Christchurch","g":"城市/州/省份"},{"cn":"渥太华","en":"Ottawa","g":"城市/州/省份"},{"cn":"不列颠哥伦比亚省","en":"British Columbia","g":"城市/州/省份"},{"cn":"温哥华","en":"Vancouver","g":"城市/州/省份"},{"cn":"芝加哥地区","en":"Chicago-area","g":"城市/州/省份"},{"cn":"佛罗伦萨","en":"Florence","g":"城市/州/省份"},{"cn":"梵蒂冈","en":"Vatican","g":"城市/州/省份"},{"cn":"麦加","en":"Mecca","g":"城市/州/省份"}]},{"key":"works","title":"作品名","en":"Titles / Works","words":[{"cn":"《纽约时报》","en":"The New York Times","g":"报刊/书籍"},{"cn":"《华盛顿邮报》","en":"The Washington Post","g":"报刊/书籍"},{"cn":"《经济学人》","en":"The Economist","g":"报刊/书籍"},{"cn":"《卫报》","en":"The Guardian","g":"报刊/书籍"},{"cn":"《时代周刊》","en":"Time","g":"报刊/书籍"},{"cn":"《自然》","en":"Nature","g":"报刊/书籍"},{"cn":"《科学》","en":"Science","g":"报刊/书籍"},{"cn":"《圣经》","en":"the Bible","g":"报刊/书籍"},{"cn":"《古兰经》","en":"the Quran","g":"报刊/书籍"},{"cn":"《权利法案》","en":"the Bill of Rights","g":"法律/法案"},{"cn":"《独立宣言》","en":"the Declaration of Independence","g":"法律/法案"},{"cn":"《宪法》","en":"the Constitution","g":"法律/法案"},{"cn":"《民权法案》","en":"the Civil Rights Act","g":"法律/法案"}]},{"key":"disc","title":"专业名","en":"Academic Disciplines","words":[{"cn":"哲学","en":"philosophy","g":"专业名"},{"cn":"心理学","en":"psychology","g":"专业名"},{"cn":"社会学","en":"sociology","g":"专业名"},{"cn":"人类学","en":"anthropology","g":"专业名"},{"cn":"经济学","en":"economics","g":"专业名"},{"cn":"生物学","en":"biology","g":"专业名"},{"cn":"生态学","en":"ecology","g":"专业名"},{"cn":"地质学","en":"geology","g":"专业名"},{"cn":"物理学","en":"physics","g":"专业名"},{"cn":"化学","en":"chemistry","g":"专业名"},{"cn":"语言学","en":"linguistics","g":"专业名"},{"cn":"美学","en":"aesthetics","g":"专业名"},{"cn":"伦理学","en":"ethics","g":"专业名"},{"cn":"逻辑学","en":"logic","g":"专业名"},{"cn":"数学","en":"mathematics","g":"专业名"},{"cn":"统计学","en":"statistics","g":"专业名"},{"cn":"考古学","en":"archaeology","g":"专业名"},{"cn":"天文学","en":"astronomy","g":"专业名"},{"cn":"政治学","en":"political science","g":"专业名"},{"cn":"医学","en":"medicine","g":"专业名"}]},{"key":"orgs","title":"机构名","en":"Institutions","words":[{"cn":"联合国","en":"United Nations (UN)","g":"国际组织/机构"},{"cn":"世界卫生组织","en":"WHO","g":"国际组织/机构"},{"cn":"世界贸易组织","en":"WTO","g":"国际组织/机构"},{"cn":"国际货币基金组织","en":"IMF","g":"国际组织/机构"},{"cn":"世界银行","en":"World Bank","g":"国际组织/机构"},{"cn":"欧盟","en":"EU","g":"国际组织/机构"},{"cn":"北约","en":"NATO","g":"国际组织/机构"},{"cn":"联合国教科文组织","en":"UNESCO","g":"国际组织/机构"},{"cn":"美国环境保护署","en":"EPA","g":"国际组织/机构"},{"cn":"最高法院","en":"the Supreme Court","g":"国际组织/机构"},{"cn":"皇家学会","en":"the Royal Society","g":"国际组织/机构"},{"cn":"美联储","en":"the Federal Reserve","g":"国际组织/机构"},{"cn":"联邦法院","en":"the Federal Court","g":"国际组织/机构"},{"cn":"英国皇家艺术院","en":"the Royal Academy","g":"国际组织/机构"},{"cn":"罗马天主教会","en":"Roman Catholic Church","g":"国际组织/机构"},{"cn":"哈佛大学","en":"Harvard University","g":"名校"},{"cn":"斯坦福大学","en":"Stanford University","g":"名校"},{"cn":"牛津大学","en":"Oxford University","g":"名校"},{"cn":"剑桥大学","en":"Cambridge University","g":"名校"},{"cn":"麻省理工学院","en":"MIT","g":"名校"},{"cn":"好莱坞","en":"Hollywood","g":"地标/其他机构"},{"cn":"百老汇","en":"Broadway","g":"地标/其他机构"},{"cn":"卢浮宫","en":"Louvre / the Louvre Museum","g":"地标/其他机构"},{"cn":"雅典卫城","en":"Acropolis","g":"地标/其他机构"},{"cn":"帕特农神庙","en":"Parthenon","g":"地标/其他机构"},{"cn":"巨石阵","en":"Stonehenge","g":"地标/其他机构"},{"cn":"埃菲尔铁塔","en":"Eiffel Tower","g":"地标/其他机构"},{"cn":"威斯敏斯特教堂","en":"Westminster Abbey","g":"地标/其他机构"},{"cn":"奥林匹克运动会","en":"the Olympics","g":"地标/其他机构"},{"cn":"诺贝尔奖","en":"Nobel Prize","g":"地标/其他机构"},{"cn":"硅谷","en":"Silicon Valley","g":"地标/其他机构"},{"cn":"华尔街","en":"Wall Street","g":"地标/其他机构"},{"cn":"泰姬陵","en":"the Taj Mahal","g":"地标/其他机构"},{"cn":"大堡礁","en":"the Great Barrier Reef","g":"地标/其他机构"},{"cn":"梵蒂冈城","en":"Vatican City","g":"地标/其他机构"},{"cn":"奥林匹斯山","en":"Mount Olympus","g":"地标/其他机构"},{"cn":"卡内基音乐厅","en":"Carnegie Hall","g":"地标/其他机构"},{"cn":"联合国世界遗产","en":"UNESCO World Heritage","g":"地标/其他机构"}]},{"key":"other","title":"其他专有名词","en":"Others","words":[{"cn":"文艺复兴","en":"Renaissance","g":"历史时期/运动"},{"cn":"启蒙运动","en":"Enlightenment","g":"历史时期/运动"},{"cn":"中世纪","en":"the Middle Ages / Medieval","g":"历史时期/运动"},{"cn":"宗教改革","en":"Reformation","g":"历史时期/运动"},{"cn":"罗马帝国","en":"Roman Empire","g":"历史时期/运动"},{"cn":"拜占庭帝国","en":"Byzantine Empire","g":"历史时期/运动"},{"cn":"古希腊文明","en":"Greek Civilization","g":"历史时期/运动"},{"cn":"工业革命","en":"Industrial Revolution","g":"历史时期/运动"},{"cn":"十字军东征","en":"the Crusades","g":"历史时期/运动"},{"cn":"殖民时代","en":"colonial era","g":"历史时期/运动"},{"cn":"浪漫主义","en":"Romanticism","g":"历史时期/运动"},{"cn":"拿破仑战争","en":"Napoleonic Wars","g":"历史时期/运动"},{"cn":"法西斯主义","en":"Fascism","g":"历史时期/运动"},{"cn":"英国的","en":"British","g":"身份/属性"},{"cn":"美国的","en":"American","g":"身份/属性"},{"cn":"欧洲的","en":"European","g":"身份/属性"},{"cn":"北美的","en":"North American","g":"身份/属性"},{"cn":"加拿大的","en":"Canadian","g":"身份/属性"},{"cn":"印度人","en":"Indian","g":"身份/属性"},{"cn":"基督教","en":"Christianity","g":"宗教"},{"cn":"天主教","en":"Catholicism","g":"宗教"},{"cn":"新教","en":"Protestantism","g":"宗教"},{"cn":"伊斯兰教","en":"Islam","g":"宗教"},{"cn":"佛教","en":"Buddhism","g":"宗教"},{"cn":"犹太教","en":"Judaism","g":"宗教"},{"cn":"英语","en":"English","g":"语言"},{"cn":"西班牙语","en":"Spanish","g":"语言"},{"cn":"阿拉伯语","en":"Arabic","g":"语言"},{"cn":"汉语普通话","en":"Mandarin","g":"语言"},{"cn":"日语","en":"Japanese","g":"语言"},{"cn":"法语","en":"French","g":"语言"},{"cn":"德语","en":"German","g":"语言"},{"cn":"拉丁语","en":"Latin","g":"语言"}]}];
+
+/* ============ 词条介绍（译错时展示） ============ */
+/* key 规则：英文名唯一时直接用英文名；重名（如 Washington 人名/地名）
+   用「板块|英文|中文」精确 key，保证取到正确的那一条。 */
+const INTRO = {
+  "Aristotle": "古希腊哲学家，柏拉图的学生、亚历山大的老师，被誉为希腊哲学的集大成者。著作涵盖形而上学、政治学、伦理学、美学等领域，名言“吾爱吾师，吾更爱真理”传世。",
+  "Plato": "古希腊哲学家，苏格拉底的学生，西方客观唯心主义的创始人。认为现实世界之上存在一个“理念世界”，主要著作有《理想国》《对话录》。",
+  "Socrates": "古希腊哲学家，柏拉图的老师，被誉为“西方哲学的奠基者”。主张“美德即知识”“认识你自己”，使哲学从研究自然转向研究人本身。",
+  "Marx": "德国思想家、哲学家、经济学家，马克思主义的创立者。与恩格斯共同发表《共产党宣言》，著有《资本论》，对20世纪世界历史进程产生了深远影响。",
+  "Adam Smith": "苏格兰经济学家、哲学家，古典政治经济学之父。代表作《国富论》系统阐述了自由市场理论，提出“看不见的手”概念，奠定了现代经济学基础。",
+  "Rousseau": "法国启蒙思想家、哲学家，被称为“思想界的浪漫主义之父”。代表作《社会契约论》《论人类不平等的起源》，主张主权在民，深刻影响了法国大革命。",
+  "Immanuel Kant": "德国哲学家，德国古典哲学的奠基人。提出“物自体不可知”但可通过先天认识形式（时间、空间、因果律）认识现象界，即“人的理性为自然立法”。",
+  "Locke": "英国哲学家，经验主义的代表人物。提倡三权分立，其民主自由主义思想直接影响了法国大革命和美国革命，促进了资本主义的发展。",
+  "Hegel": "德国哲学家，客观唯心主义的集大成者。认为理性是世界的本质即“绝对精神”，历史通过不断的辩证发展走向绝对精神，构建了最宏伟的形而上学体系。",
+  "Freud": "奥地利精神病学家、心理学家，精神分析学派的创始人。提出潜意识理论、本我/自我/超我的人格结构模型，开创了心理治疗的新范式。",
+  "Thales": "古希腊哲学家，米利都学派的创始人，被誉为“西方哲学之父”。他首次用自然原因而非神话来解释世界的本原，提出“水是万物之源”。",
+  "Voltaire": "法国启蒙思想家、文学家。倡导言论自由和宗教宽容，猛烈批判天主教会和专制制度，其思想对法国大革命和欧洲启蒙运动影响深远。",
+  "Archimedes": "古希腊哲学家、科学家、数学家，被称为“力学之父”。发现浮力原理和杠杆原理，名言“给我一个支点，我将撬动整个地球”流传千古。",
+  "Nietzsche": "德国哲学家，提出“上帝已死”和“超人”学说。认为物自体是“权力意志”，即让自己变得更强的欲望，对20世纪存在主义和后现代主义影响深远。",
+  "Darwin": "英国生物学家，进化论的奠基人。出版《物种起源》，提出自然选择学说，恩格斯将进化论列为19世纪自然科学的三大发现之一。",
+  "Newton": "英国数学家、物理学家、天文学家，近代自然科学的奠基人。创建微积分，发现万有引力定律和经典力学三大定律，被誉为人类历史上最伟大的科学家之一。",
+  "Einstein": "德裔美国物理学家，现代物理学的开创者。提出相对论和质能关系公式E=mc²，被美国《时代周刊》评选为“世纪伟人”。",
+  "Galileo": "意大利物理学家、天文学家，近代实验科学的先驱者。发明了天文望远镜，用实验方法研究落体运动，被誉为“哥伦布发现了新大陆，伽利略发现了新宇宙”。",
+  "Marie Curie": "法国籍波兰裔科学家，放射性研究的先驱。发现镭和钋元素，一生获得两次诺贝尔奖（物理学奖和化学奖），是首位两获诺奖的科学家。",
+  "Nobel": "瑞典化学家、发明家，炸药的发明者。逝世后以其遗产设立诺贝尔奖，涵盖物理、化学、医学、文学、和平等领域，成为全球最高荣誉的象征。",
+  "James Watt": "英国著名发明家，改良了蒸汽机，发明了气压表和汽动锤。瓦特的蒸汽机改良是人类第一次科技革命的标志，极大推动了工业革命的进程。",
+  "Copernicus": "波兰天文学家，日心说的创立者，近代天文学的奠基人。其著作《天体运行论》挑战了地心说，开启了近代科学革命。",
+  "Morse": "美国发明家，莫尔斯电码的发明者。他发明的电报系统使远距离即时通信成为可能，彻底改变了19世纪的通信方式。",
+  "Edison": "美国电学家、发明家，被誉为“世界发明大王”。发明电灯泡等约两千项创造发明，极大改变了人类的生活方式。",
+  "Hubble": "美国天文学家，发现宇宙膨胀的证据，证实了银河系之外还有其他星系，被誉为20世纪最伟大的天文学家之一。",
+  "Hawking": "英国理论物理学家，黑洞辐射理论（霍金辐射）的提出者。著有《时间简史》，是当代最著名的科普作家和物理学家之一。",
+  "Faraday": "英国物理学家、化学家，电磁感应现象的发现者。他的发现奠定了电磁学的基础，直接推动了发电机的发明。",
+  "Alexander Bell": "苏格兰裔美国发明家，电话的发明者。他发明的电话彻底改变了人类的通信方式，对现代社会产生了深远影响。",
+  "Alan Turing": "英国数学家、计算机科学家，被誉为“计算机科学之父”。提出图灵机模型和图灵测试，二战期间参与破解德国密码，为盟军胜利做出重大贡献。",
+  "Gauss": "德国数学家、物理学家，被誉为“数学王子”。在数论、代数、统计学、天文学等领域均有重大贡献，高斯分布（正态分布）即以其命名。",
+  "Kepler": "德国天文学家，发现行星运动三大定律（开普勒定律），为牛顿发现万有引力定律奠定了基础。",
+  "Shakespeare": "英国文艺复兴时期杰出的戏剧家和诗人，欧洲人文主义文学的集大成者。代表作有四大悲剧《哈姆雷特》《奥赛罗》《李尔王》《麦克白》。",
+  "Dickens": "英国维多利亚时代最伟大的小说家，被称为“第二个莎士比亚”。代表作《雾都孤儿》《双城记》《远大前程》，深刻揭露了工业时代的社会问题。",
+  "Emerson": "美国思想家、散文作家、诗人，超验主义文学运动的领袖。1803年生于波士顿，代表作《论自然》《论自助》，强调个人独立与精神自由。",
+  "Thoreau": "美国作家、哲学家，超验主义代表人物。代表作《瓦尔登湖》记录了他在湖畔独居两年的生活体验，倡导简朴生活和回归自然。",
+  "Picasso": "西班牙艺术家，20世纪最伟大的画家之一，法国立体主义画派的创始人。代表作《格尔尼卡》《亚维农少女》，对现代艺术影响深远。",
+  "Da Vinci": "意大利文艺复兴时期最杰出的代表人物之一，画家、科学家、发明家。代表作《蒙娜丽莎》《最后的晚餐》，其成就和贡献遍及多个领域。",
+  "Van Gogh": "荷兰后印象派画家，一生穷困潦倒却创作了《星夜》《向日葵》等不朽名作，其独特的色彩和笔触对20世纪艺术产生了深远影响。",
+  "Claude Monet": "法国印象派绘画的创始人和代表人物。代表作《日出·印象》《睡莲》系列，以光色变化的细腻捕捉闻名于世。",
+  "Beethoven": "德国作曲家、钢琴家，被誉为“音乐巨人”。代表作有九部交响曲（含《命运交响曲》《第九交响曲》），在失聪后仍创作了大量伟大作品。",
+  "Mozart": "奥地利作曲家，维也纳古典乐派的杰出代表，被誉为“音乐神童”。五岁会作曲，一生创作了22部歌剧、41部交响乐等大量作品。",
+  "Bach": "德国作曲家，被誉为“西方音乐之父”。他的作品对欧洲近代音乐的发展产生了极其深远的影响，为世界古典音乐树立了丰碑。",
+  "Chopin": "波兰作曲家、钢琴家，被誉为“钢琴诗人”。代表作有大量钢琴独奏曲，包括夜曲、圆舞曲、波兰舞曲等，是浪漫主义音乐的代表人物。",
+  "Schubert": "奥地利作曲家，早期浪漫主义音乐的代表人物，被誉为“歌曲之王”。一生创作了600多首艺术歌曲，代表作《魔王》《鳟鱼》。",
+  "Johann Strauss": "奥地利作曲家，被誉为“圆舞曲之王”。代表作《蓝色多瑙河》《维也纳森林的故事》，使维也纳圆舞曲风靡全欧洲。",
+  "Hemingway": "美国作家，20世纪最著名的小说家之一，“迷惘的一代”的代表人物。代表作《老人与海》《永别了，武器》，1954年获诺贝尔文学奖。",
+  "Helen Keller": "美国作家、教育家、社会活动家。19个月大时因病失去视力和听力，后在安妮·莎莉文老师的帮助下学会读写，成为励志典范，代表作《假如给我三天光明》。",
+  "O.Henry": "美国短篇小说家，以“欧·亨利式结尾”闻名。代表作《麦琪的礼物》《最后一片藤叶》，擅长描写普通人的生活和情感。",
+  "Pound": "美国诗人、文学评论家，意象主义诗歌运动的领袖。代表作《在地铁站内》，对20世纪英美诗歌的发展产生了深远影响。",
+  "O'Neill": "美国剧作家，1936年诺贝尔文学奖得主。代表作《进入黑夜的漫长旅程》《榆树下的欲望》，被誉为美国现代戏剧的奠基人。",
+  "Orwell": "英国作家，代表作《1984》和《动物农场》。他的作品以犀利的政治讽刺著称，对极权主义发出了深刻警示。",
+  "Balzac": "法国现实主义小说家，代表作《人间喜剧》系列包含90多部小说，全面描绘了19世纪法国社会的风貌。",
+  "Baudelaire": "法国诗人，象征主义诗歌的先驱。代表作《恶之花》开创了现代诗歌的新方向，对后世象征主义和现代主义文学影响深远。",
+  "Borges": "阿根廷作家、诗人，被誉为“作家中的作家”。代表作《小径分岔的花园》《虚构集》，以迷宫般的叙事和哲学思辨著称。",
+  "Dumas": "法国浪漫主义作家，代表作《基督山伯爵》《三个火枪手》。他的历史小说情节跌宕起伏，深受全球读者喜爱。",
+  "Dickinson": "美国女诗人，被誉为美国最伟大的诗人之一。生前默默无闻，去世后其诗作被发现，以独特的短句和深邃的哲思著称。",
+  "Faulkner": "美国作家，1949年诺贝尔文学奖得主。代表作《喧哗与骚动》《八月之光》，以美国南方为背景，运用意识流手法，是20世纪最重要的作家之一。",
+  "Flaubert": "法国现实主义小说家，被誉为“小说家的小说家”。代表作《包法利夫人》，以精确的语言和冷静的叙事风格著称。",
+  "Goethe": "德国最伟大的作家、思想家，代表作《浮士德》《少年维特之烦恼》。他的创作涵盖诗歌、戏剧、小说等领域，是德国文学史上最杰出的人物。",
+  "Heller": "美国作家，黑色幽默文学的代表人物。代表作《第二十二条军规》，以荒诞和讽刺的手法揭示战争的荒谬。",
+  "Homer": "古希腊盲诗人，相传为《伊利亚特》和《奥德赛》两部史诗的作者。这两部史诗是西方文学的源头，塑造了西方文化的英雄观。",
+  "Jack London": "美国作家，代表作《野性的呼唤》《白牙》《海狼》。他的作品以冒险和生存为主题，充满对自然和生命的深刻思考。",
+  "Roth": "美国作家，代表作《波特诺伊的怨诉》《美国牧歌》。他是美国当代最重要的犹太裔作家之一，作品深刻探讨身份与欲望。",
+  "Maupassant": "法国短篇小说大师，被誉为“短篇小说之王”。代表作《羊脂球》《项链》，以简洁精确的笔触描绘社会百态。",
+  "Murdoch": "英国小说家、哲学家，代表作《大海啊，大海》《黑王子》。她的小说融合了哲学思辨与叙事艺术，1978年获布克奖。",
+  "Zola": "法国自然主义文学的代表人物，代表作《萌芽》《娜娜》。他的《我控诉》一文为德雷福斯案伸张正义，展现了知识分子的社会责任。",
+  "Lyly": "英国文艺复兴时期的剧作家、小说家，以优雅的散文风格著称。代表作《尤弗伊斯》，其文体被称为“尤弗伊斯体”，对后世英语散文影响深远。",
+  "Peele": "英国伊丽莎白时代的剧作家、诗人，与莎士比亚同时代。代表作《帕里斯受审记》，是英国早期戏剧的重要人物。",
+  "Greene": "英国伊丽莎白时代的剧作家、小说家。代表作《Pandosto》即为莎士比亚《冬天的故事》的素材来源。",
+  "Marlowe": "英国伊丽莎白时代的剧作家、诗人，被誉为“大学才子”之一。代表作《浮士德博士的悲剧》，对莎士比亚的戏剧创作有重要影响。",
+  "Kyd": "英国伊丽莎白时代的剧作家，代表作《西班牙悲剧》。该剧开创了复仇悲剧的先河，对莎士比亚的《哈姆雷特》有深远影响。",
+  "T.S. Eliot": "美裔英国诗人、剧作家、文学批评家，1948年诺贝尔文学奖得主。代表作《荒原》被誉为20世纪最重要的英语诗歌。",
+  "Noam Chomsky": "美国语言学家、哲学家，被誉为“现代语言学之父”。提出转换生成语法理论，同时是著名的政治评论家和社会活动家。",
+  "James Allen": "英国作家，被誉为“人生哲学之父”，被称为20世纪的“文学神秘人”。代表作《人如其所思》（As a Man Thinketh），是世界经典励志丛书《羊皮卷》作者之一。",
+  "Napoleon": "法国军事家、政治家，法兰西第一帝国皇帝。横扫欧洲大陆，颁布《拿破仑法典》，对欧洲政治格局和法律体系影响深远。",
+  "Mandela": "南非反种族隔离革命家，南非首位黑人总统，1993年诺贝尔和平奖得主。在狱中度过27年，出狱后推动种族和解，被誉为“南非国父”。",
+  "Stalin": "苏联政治家，苏联共产党中央委员会总书记。领导苏联进行工业化和集体化，在二战中领导苏联抗击纳粹德国，对20世纪世界格局影响深远。",
+  "Darwinian": "指信奉达尔文进化论的人士。进化论认为物种通过自然选择逐渐演化，这一理论深刻影响了生物学、哲学和社会科学的发展。",
+  "Churchill": "英国政治家，二战时期英国首相，领导英国抗击纳粹德国。1953年获诺贝尔文学奖，其演说和著作对20世纪历史影响深远。",
+  "Lincoln": "美国第16任总统，领导联邦政府在南北战争中获胜，颁布《解放黑人奴隶宣言》，废除了奴隶制，维护了国家统一。",
+  "Franklin": "美国开国元勋，政治家、科学家、发明家。参与起草《独立宣言》和美国宪法，发明了避雷针，被誉为“第一个美国人”。",
+  "Thomas Jefferson": "美国第三任总统，《独立宣言》的主要起草人。倡导民主自由和有限政府，推动路易斯安那购地案，极大扩展了美国领土。",
+  "names|Washington|华盛顿(人名)": "美国第一任总统，独立战争时期大陆军总司令。主持制宪会议，确立了美国总统制的传统，被誉为“美国国父”。",
+  "Franklin Roosevelt": "美国第32任总统，唯一连任四届的美国总统。推行“新政”应对大萧条，领导美国参加二战，对现代美国政治影响深远。",
+  "Margaret Thatcher": "英国第一位女首相，被称为“铁娘子”。推行自由市场经济改革，与里根共同推动了冷战的结束。",
+  "Martin Luther King": "美国民权运动领袖，1964年诺贝尔和平奖得主。发表著名演讲《我有一个梦想》，倡导非暴力抗争，为美国种族平等做出了巨大贡献。",
+  "Arnold Schwarzenegger": "奥地利裔美国演员、健美运动员，后任加利福尼亚州州长。代表作《终结者》系列，是健美运动和好莱坞动作片的标志性人物。",
+  "John Rockefeller": "美国石油大亨，标准石油公司的创始人，被认为是人类历史上首位亿万富翁。其商业帝国对现代石油工业影响深远。",
+  "Carnegie": "美国钢铁大王和慈善家。安德鲁·卡内基从苏格兰移民到美国，建立了庞大的钢铁帝国，晚年捐建了2500多座图书馆等公益设施。",
+  "Walt Disney": "美国动画片制作人、企业家，迪士尼公司的创始人。创造了米老鼠等经典卡通形象，开创了主题公园产业，对全球娱乐文化影响深远。",
+  "Bill Gates": "美国企业家，微软公司的创始人。推动了个人电脑的普及，连续多年位居世界首富，后专注于慈善事业。",
+  "Pele": "巴西足球运动员，被誉为“球王”。唯一三次获得世界杯冠军的球员，职业生涯进球超过1000个，被国际足联评为20世纪最伟大球员。",
+  "Michael Jordan": "美国篮球运动员，被誉为篮球史上最伟大的球员。带领芝加哥公牛队六次获得NBA总冠军，五次获得常规赛MVP。",
+  "Lance Armstrong": "美国自行车运动员，曾七次获得环法自行车赛冠军。后因使用兴奋剂被剥夺全部冠军头衔，成为体育史上最大的禁药丑闻之一。",
+  "the United States / America": "位于北美洲的联邦制共和国，由50个州组成。是当今世界最大的经济体，在政治、军事、科技、文化等领域具有全球影响力。",
+  "the United Kingdom / Britain": "位于欧洲西北部的岛国，由英格兰、苏格兰、威尔士和北爱尔兰组成。是工业革命的发源地，曾是全球最大的殖民帝国。",
+  "Canada": "位于北美洲北部的联邦制国家，面积居世界第二。以多元文化和双语（英语、法语）为特色，自然资源丰富，生活质量位居世界前列。",
+  "Australia": "位于南半球的大洋洲国家，面积居世界第六。以独特的野生动植物和自然景观著称，是发达国家中经济增长最稳定的经济体之一。",
+  "Germany": "位于欧洲中部的联邦制国家，欧洲最大的经济体。在哲学、科学、音乐、工程等领域涌现出大量世界级人物。",
+  "France": "位于西欧的共和国，欧洲文化中心之一。以美食、时尚、艺术和葡萄酒闻名，是联合国安理会常任理事国之一。",
+  "Italy": "位于南欧的共和国，古罗马文明和文艺复兴的发源地。拥有世界上最多的世界文化遗产，在艺术、设计、时尚领域影响深远。",
+  "Spain": "位于欧洲西南部的君主立宪制国家，大航海时代的海上霸主。西班牙语是世界第二大母语，对拉美文化影响深远。",
+  "Russia": "横跨欧亚大陆的联邦制国家，面积居世界第一。拥有丰富的自然资源，文学、音乐、芭蕾舞等领域成就举世瞩目。",
+  "India": "位于南亚的联邦制共和国，世界人口最多的国家。四大文明古国之一，以多元宗教、语言和文化著称，IT产业和电影业发达。",
+  "Brazil": "位于南美洲的最大国家，以桑巴舞、足球和亚马逊雨林闻名。是金砖国家之一，拉美最大的经济体。",
+  "Mexico": "位于北美洲的联邦制共和国，玛雅和阿兹特克文明的发源地。以美食、音乐和传统文化著称，是拉美第二大经济体。",
+  "South Korea": "位于东亚朝鲜半岛南部的共和国。战后经济飞速发展，被称为“汉江奇迹”，在半导体、流行音乐（K-pop）、影视等领域具有全球影响力。",
+  "Japan": "位于东亚的岛国，世界第三大经济体。以科技、动漫、美食和传统文化闻名，是亚洲最发达的国家之一。",
+  "Singapore": "位于东南亚的城市国家，全球金融中心之一。以高效的治理、优越的地理位置和多元文化著称，是亚洲最发达的经济体之一。",
+  "New Zealand": "位于南太平洋的岛国，以壮丽的自然风光和毛利文化著称。农牧业发达，是世界最大的乳制品出口国之一。",
+  "Austria": "位于欧洲中部的内陆国家，音乐之都维也纳的所在地。是莫扎特、贝多芬等音乐大师的故乡，以古典音乐和阿尔卑斯山风光闻名。",
+  "Sweden": "位于北欧的君主立宪制国家，以高福利制度和创新精神著称。是诺贝尔奖的颁发国，在科技、设计、环保等领域领先世界。",
+  "Switzerland": "位于欧洲中部的联邦制国家，以永久中立著称。是全球金融中心之一，钟表制造业世界闻名，阿尔卑斯山风光吸引大量游客。",
+  "Portugal": "位于欧洲西南部的共和国，大航海时代的先驱。葡萄牙语遍布全球，以葡萄酒、瓷砖和足球文化闻名。",
+  "Greece": "位于东南欧的共和国，西方文明的摇篮。古希腊哲学、民主政治和奥林匹克运动会均发源于此。",
+  "New York": "美国最大的城市和全球金融中心，位于美国东海岸。联合国总部所在地，以多元文化、自由女神像和曼哈顿天际线闻名。",
+  "places|Washington|华盛顿(地名)": "美国首都，位于哥伦比亚特区。是美国联邦政府所在地，拥有白宫、国会大厦、最高法院等标志性建筑。",
+  "Chicago": "美国第三大城市，位于伊利诺伊州。以建筑、爵士乐、深盘披萨和芝加哥期货交易所闻名。",
+  "Los Angeles": "美国第二大城市，位于加利福尼亚州。好莱坞的所在地，是全球电影和娱乐产业的中心。",
+  "Boston": "美国马萨诸塞州首府，美国最古老的城市之一。以哈佛大学、麻省理工学院等顶尖学府和丰富的历史文化著称。",
+  "San Francisco": "美国加利福尼亚州的重要城市，以金门大桥、渔人码头和有轨电车闻名。邻近硅谷，是科技创新的重要中心。",
+  "Seattle": "美国华盛顿州最大城市，星巴克和亚马逊的总部所在地。以多雨的气候、咖啡文化和波音飞机制造闻名。",
+  "Philadelphia": "美国宾夕法尼亚州最大城市，美国独立宣言和宪法签署地。曾是美国的首都，独立厅和自由钟是重要历史遗迹。",
+  "California": "美国西海岸最大的州，经济总量居美国各州之首。硅谷和好莱坞均位于此，是美国科技和娱乐产业的中心。",
+  "Texas": "美国南部最大的州，面积居美国第二。以能源产业、牛仔文化和休斯顿航天中心闻名。",
+  "London": "英国首都，欧洲最大的城市之一，全球金融中心。以悠久的历史、大本钟、白金汉宫和大英博物馆闻名。",
+  "Paris": "法国首都，世界文化名城。以埃菲尔铁塔、卢浮宫、时尚和美食闻名，是全球最受欢迎的旅游目的地之一。",
+  "Berlin": "德国首都，欧洲重要的政治和文化中心。以丰富的历史遗迹、博物馆岛和多元的艺术氛围著称。",
+  "Rome": "意大利首都，古罗马帝国的中心，被誉为“永恒之城”。拥有斗兽场、万神殿等大量古代遗迹，是世界最大的露天历史博物馆。",
+  "Moscow": "俄罗斯首都，欧洲人口最多的城市。以红场、克里姆林宫和圣瓦西里大教堂闻名，是俄罗斯政治、经济、文化中心。",
+  "Toronto": "加拿大最大城市，加拿大金融和文化中心。以多元文化著称，是加拿大最重要的移民目的地之一。",
+  "Sydney": "澳大利亚最大城市，以悉尼歌剧院和海港大桥闻名。是澳大利亚的经济、金融和文化中心。",
+  "Tokyo": "日本首都，世界最大的都市圈之一。是日本政治、经济、文化中心，以繁华的商业区、美食和传统文化著称。",
+  "Hong Kong": "中国特别行政区，全球重要的金融和贸易中心。以维多利亚港天际线、自由经济和东西方文化交融闻名。",
+  "Maine": "美国东北部新英格兰地区的一个州，以龙虾、缅因州海岸和秋季红叶闻名。",
+  "Georgia": "美国东南部的一个州，首府亚特兰大。可口可乐和CNN总部所在地，以南方文化和历史著称。",
+  "Liverpool": "英国英格兰西北部的港口城市，披头士乐队的故乡。曾是英国最重要的贸易港口之一，以足球俱乐部和音乐文化闻名。",
+  "Manchester": "英国英格兰西北部的重要城市，工业革命的发源地之一。以足球俱乐部、音乐文化和大学闻名。",
+  "Sheffield": "英国英格兰南约克郡的城市，曾是英国钢铁工业的中心。以刀具制造和足球俱乐部闻名。",
+  "Birmingham": "英国英格兰中部的重要城市，英国第二大城市。曾是工业革命的重要中心，以多元文化和运河网络著称。",
+  "Coventry": "英国英格兰西米德兰兹郡的城市，二战中遭受严重轰炸。以汽车工业和重建后的现代主义建筑闻名。",
+  "Leeds": "英国英格兰西约克郡的城市，以金融、法律和高等教育著称。是英国重要的商业和文化中心之一。",
+  "Scotland": "英国北部的组成部分，首府爱丁堡。以风笛、苏格兰裙、威士忌和高地风光闻名，拥有独立的议会和法律体系。",
+  "Edinburgh": "苏格兰首府，以爱丁堡城堡、皇家英里和爱丁堡艺术节闻名。是欧洲最美丽的城市之一，拥有丰富的文学和哲学传统。",
+  "Wales": "英国西南部的组成部分，首府加的夫。以威尔士语、独特的凯尔特文化和壮丽的山地风光著称。",
+  "Ireland": "位于欧洲西北部的岛国，以绿色乡村、健力士啤酒和文学传统闻名。乔伊斯、叶芝等文学大师均出自爱尔兰。",
+  "Dublin": "爱尔兰首都，爱尔兰最大的城市。以健力士啤酒厂、圣三一学院和文学传统著称，是欧洲最年轻的城市之一。",
+  "Canberra": "澳大利亚首都，位于悉尼和墨尔本之间的内陆城市。以规划整齐的城市设计和国会大厦等政府建筑著称。",
+  "Queensland": "澳大利亚东北部的州，首府布里斯班。以黄金海岸、大堡礁和热带气候闻名。",
+  "New South Wales": "澳大利亚东南部的州，首府悉尼。是澳大利亚人口最多、经济最发达的州。",
+  "South Australia": "澳大利亚南部的州，首府阿德莱德。以葡萄酒产区、巴罗萨谷和独特的野生动物著称。",
+  "Victoria": "澳大利亚东南部的州，首府墨尔本。以大洋路、菲利普岛企鹅和丰富的文化活动闻名。",
+  "Melbourne": "澳大利亚第二大城市，维多利亚州首府。以咖啡文化、街头艺术和体育赛事闻名，多次被评为全球最宜居城市。",
+  "Perth": "澳大利亚西澳大利亚州首府，澳大利亚第四大城市。以美丽的海滩、国王公园和阳光明媚的气候著称。",
+  "Wellington": "新西兰首都，位于北岛最南端。以大风、咖啡文化和电影产业（维塔工作室）闻名。",
+  "Auckland": "新西兰最大城市，位于北岛。被称为“帆船之都”，以火山地貌、海滨风光和多元文化著称。",
+  "Christchurch": "新西兰南岛最大城市，以英国风情建筑和花园著称。2011年地震后经历了大规模重建。",
+  "Ottawa": "加拿大首都，位于安大略省。以国会大厦、里多运河和冬季嘉年华闻名，是加拿大政治中心。",
+  "British Columbia": "加拿大西海岸的省份，首府维多利亚。以壮丽的山脉、温带雨林和滑雪胜地闻名。",
+  "Vancouver": "加拿大西海岸最大城市，不列颠哥伦比亚省最大城市。以自然风光、电影产业和多元文化著称，多次被评为全球最宜居城市之一。",
+  "Chicago-area": "指美国芝加哥及其周边都市区，包括伊利诺伊州东北部多个县。是重要的商业、金融和交通中心。",
+  "Florence": "意大利中部城市，文艺复兴的发源地。以乌菲兹美术馆、圣母百花大教堂和达·芬奇、米开朗基罗等艺术大师闻名。",
+  "Vatican": "位于罗马城内的独立国家，世界最小的国家。是天主教的中心和教皇的驻地，拥有圣彼得大教堂和梵蒂冈博物馆。",
+  "Mecca": "沙特阿拉伯城市，伊斯兰教最神圣的城市。是先知穆罕默德的诞生地，每年有数百万穆斯林前来朝觐。",
+  "Europe": "位于亚欧大陆西部的洲，面积约1016万平方公里。是西方文明的发源地，拥有丰富的文化遗产和发达的经济体。",
+  "Asia": "世界上面积最大、人口最多的洲。是四大文明古国的发源地，拥有多元的文化、宗教和经济体系。",
+  "Africa": "世界第二大洲，拥有丰富的自然资源和生物多样性。是人类文明的发源地之一，拥有54个国家。",
+  "North America": "位于西半球的洲，包括美国、加拿大、墨西哥等国家。经济发达，文化多元，对全球政治经济影响深远。",
+  "South America": "位于西半球的洲，拥有亚马逊雨林和安第斯山脉。以丰富的生物多样性、足球文化和热情的民族性格著称。",
+  "Oceania": "位于太平洋区域的洲，包括澳大利亚、新西兰和众多太平洋岛国。以独特的自然生态和土著文化闻名。",
+  "Antarctica": "位于地球最南端的大陆，是世界上最后一片未被开发的大陆。是科学考察的重要基地，拥有丰富的矿产资源。",
+  "the Middle East": "指地中海东部到波斯湾的大片地区，包括阿拉伯半岛、伊朗、伊拉克等。是三大宗教的圣地，石油资源丰富，地缘政治重要。",
+  "the West": "通常指欧洲、北美等发达国家，以民主制度、市场经济和基督教文化传统为特征。",
+  "Western Europe": "欧洲西部地区，包括英国、法国、德国、荷兰、比利时等国。是欧盟的核心区域，经济发达，文化影响力强。",
+  "west Germany": "冷战时期联邦德国（西德）的简称，1990年与东德统一。是欧洲经济强国，对欧洲一体化进程影响深远。",
+  "Iberian Peninsula": "位于欧洲西南部的半岛，包括西班牙和葡萄牙。是大航海时代的起点，文化融合了基督教和伊斯兰教的影响。",
+  "the Old Continent": "通常指欧洲，相对于哥伦布发现的新大陆（美洲）而言。拥有悠久的历史和深厚的文化传统。",
+  "the New World": "指哥伦布到达美洲后欧洲人所称的美洲大陆，相对于欧亚非旧大陆而言。",
+  "the Pacific Ocean": "世界上面积最大的海洋，位于亚洲、大洋洲和美洲之间。是重要的航运通道，周边国家和地区经济活跃。",
+  "the Atlantic Ocean": "世界第二大洋，位于美洲与欧洲、非洲之间。是连接新旧大陆的重要航道，历史上是殖民和贸易的重要通道。",
+  "the Indian Ocean": "世界第三大洋，位于亚洲、非洲和大洋洲之间。是重要的石油运输通道，周边国家经济和文化交流频繁。",
+  "the Arctic Ocean": "世界上面积最小、最浅的大洋，位于地球最北端。随着全球变暖，其航道和资源开发日益受到关注。",
+  "The New York Times": "美国最有影响力的报纸之一，1851年创刊于纽约。以深度报道和严谨的新闻标准著称，是美国精英阶层的重要读物。",
+  "The Washington Post": "美国华盛顿特区最大、最老的报纸，1877年创刊。因揭露水门事件而获得国际威望，是美国政治报道的重要媒体。",
+  "The Economist": "英国出版的周刊杂志，1843年创刊。以全球视角分析政治、经济、商业事务著称，观点鲜明，读者多为政商精英。",
+  "The Guardian": "英国左倾自由主义报纸，1821年创刊于曼彻斯特。以深度调查报道和进步立场著称，是英国三大报之一。",
+  "Time": "美国新闻周刊，1923年创刊。以报道全球重大事件和评选“年度人物”闻名，是世界最有影响力的新闻杂志之一。",
+  "Nature": "英国出版的顶级科学期刊，1869年创刊。发表自然科学领域最重要的研究成果，是全球科学家竞相发表论文的殿堂。",
+  "Science": "美国科学促进会出版的顶级科学期刊，1880年创刊。与《自然》并列为世界最权威的科学期刊。",
+  "the Bible": "基督教的经典，分为旧约和新约两部分。是全世界发行量最大、翻译语言最多的书籍，对西方文化影响深远。",
+  "the Quran": "伊斯兰教的经典，被认为是安拉通过天使吉卜利勒启示给先知穆罕默德的言语。是穆斯林信仰和生活的根本依据。",
+  "the Bill of Rights": "美国宪法前十条修正案，1791年通过。保障了言论自由、宗教自由、持枪权等基本权利，是美国宪政的重要基石。",
+  "the Declaration of Independence": "1776年7月4日由大陆会议通过，宣布北美十三殖民地脱离英国独立。由杰斐逊起草，阐述了天赋人权和人民主权思想。",
+  "the Constitution": "指1787年制定的美国宪法，是世界上最早的成文宪法。确立了联邦制、三权分立和权力制衡原则，对美国政治制度影响深远。",
+  "the Civil Rights Act": "美国1964年通过的联邦法律，禁止基于种族、肤色、宗教、性别或国籍的歧视。是美国民权运动的重要成果。",
+  "philosophy": "研究存在、知识、价值、理性、心灵和语言等根本问题的学科，是一切学问的源头和基础。",
+  "linguistics": "研究语言的本质、结构、功能和发展规律的学科，涵盖语音学、句法学、语义学等领域。",
+  "psychology": "研究人类心理现象、精神功能和行为的科学，涵盖认知、情绪、人格、社会行为等方面。",
+  "aesthetics": "研究美、艺术、审美经验和审美价值的哲学分支，探讨什么是美以及如何感知美。",
+  "sociology": "研究社会结构、社会关系和社会行为的学科，关注社会秩序、变迁和群体行为。",
+  "ethics": "研究道德原则、价值标准和行为规范的哲学分支，探讨善恶、正义、权利等概念。",
+  "anthropology": "研究人类起源、进化、文化和社会行为的学科，涵盖生物人类学、文化人类学等领域。",
+  "logic": "研究推理和论证的形式与规律的学科，是数学、哲学和计算机科学的基础。",
+  "economics": "研究资源分配、生产、分配和消费的学科，分为微观经济学和宏观经济学。",
+  "mathematics": "研究数量、结构、空间和变化等抽象概念的形式科学，是自然科学的基础语言。",
+  "biology": "研究生命现象和生命活动规律的科学，涵盖遗传学、生态学、细胞生物学等领域。",
+  "statistics": "研究数据收集、分析、解释和呈现的学科，广泛应用于科学研究和决策分析。",
+  "ecology": "研究生物与环境之间相互关系的学科，关注生态系统的结构和功能。",
+  "archaeology": "通过发掘和分析古代遗迹、遗物来研究人类历史和文化的学科。",
+  "geology": "研究地球的物质组成、结构和演化历史的学科，涵盖矿物学、岩石学、地层学等。",
+  "astronomy": "研究宇宙天体及其运行规律的学科，涵盖恒星、行星、星系、宇宙学等领域。",
+  "physics": "研究物质、能量、空间和时间基本规律的学科，是自然科学的核心。",
+  "political science": "研究政治制度、政治行为和政治理论的学科，关注权力、治理和政策制定。",
+  "chemistry": "研究物质的组成、结构、性质和变化的学科，是连接物理学和生物学的桥梁。",
+  "medicine": "研究人体健康和疾病的学科，涵盖基础医学、临床医学、预防医学等。",
+  "United Nations (UN)": "1945年成立的国际组织，总部位于纽约。目前有193个成员国，致力于维护国际和平与安全、促进国际合作与发展。",
+  "WHO": "联合国下属的专门机构，1948年成立，总部位于日内瓦。致力于提升人类健康水平，应对全球公共卫生问题。",
+  "WTO": "1995年成立的国际组织，前身为关税及贸易总协定（GATT）。致力于制定统一的国际贸易规则，促进全球贸易自由化。",
+  "IMF": "1945年成立的国际金融机构，致力于促进国际货币合作和金融稳定，为成员国提供短期贷款以应对国际收支困难。",
+  "World Bank": "1944年成立的国际金融机构，致力于为发展中国家提供贷款和技术援助，推动减贫和经济发展。",
+  "EU": "欧洲一体化进程中形成的政治经济联盟，目前有27个成员国。使用统一货币欧元，是世界上最大的经济体之一。",
+  "NATO": "北大西洋公约组织，1949年成立的军事同盟。以集体防御为原则，成员国包括美国、英国、法国等30个国家。",
+  "UNESCO": "联合国专门机构，致力于推动教育、科学和文化领域的国际合作，负责世界遗产的评选和保护。",
+  "EPA": "美国政府机构，1970年成立。负责制定和执行环境保护法规，保护人类健康和环境。",
+  "the Supreme Court": "美国联邦司法系统的最高机构，由9名大法官组成。拥有司法审查权，可裁定法律是否违宪，对美国政治影响深远。",
+  "the Royal Society": "英国资助科学发展的组织，1660年成立，是世界上历史最长的科学学会。在英国起着国家科学院的作用。",
+  "the Federal Reserve": "美国的中央银行，1913年成立。负责制定货币政策、监管银行和维持金融稳定，对美国经济影响深远。",
+  "the Federal Court": "美国联邦司法系统的组成部分，包括地区法院、上诉法院和最高法院。审理涉及联邦法律和宪法的案件。",
+  "the Royal Academy": "英国艺术机构，1768年成立。致力于推广视觉艺术，举办年度艺术展览，是英国最古老的艺术机构之一。",
+  "Roman Catholic Church": "世界上最大的基督教教会，以教皇为最高领袖。拥有悠久的历史和庞大的信众群体，对西方文化影响深远。",
+  "Harvard University": "美国历史最悠久的高等学府，1636年成立于马萨诸塞州剑桥市。是常春藤盟校成员，在文学、医学、法学等领域享有崇高地位。",
+  "Stanford University": "美国顶尖私立研究型大学，1885年成立于加利福尼亚州。以科技创新和创业精神闻名，是硅谷的重要人才来源。",
+  "Oxford University": "英语世界中最古老的大学，最早成立于1167年。采用书院联邦制，培养了大量科学家、艺术家和国家元首。",
+  "Cambridge University": "英国历史最悠久的高等学府之一，1209年成立。采用书院联邦制，与牛津大学并称“牛剑”，是G5超级精英大学成员。",
+  "MIT": "美国顶尖私立研究型大学，1861年成立。以工程、科技和计算机科学闻名，在二战和冷战期间对科技发展做出了重要贡献。",
+  "Hollywood": "位于美国洛杉矶，是全球电影和娱乐产业的中心。诞生了无数经典电影和明星，象征着美国流行文化的全球影响力。",
+  "Broadway": "纽约市曼哈顿的一条大道，以剧院区闻名。是世界现场戏剧和音乐剧的最高殿堂，代表作品包括《歌剧魅影》《狮子王》等。",
+  "Louvre / the Louvre Museum": "法国巴黎的著名博物馆，曾是法国王宫。收藏了《蒙娜丽莎》《米洛的维纳斯》等艺术珍品，是世界最大的艺术博物馆之一。",
+  "Acropolis": "希腊雅典的古代建筑群，建于公元前5世纪。包括帕特农神庙等建筑，是古希腊文明的象征和民主政治的标志。",
+  "Parthenon": "雅典卫城上的古希腊神庙，供奉雅典娜女神。是古希腊建筑艺术的巅峰之作，象征着古希腊文明的辉煌。",
+  "Stonehenge": "英国威尔特郡的史前巨石建筑，约建于公元前3000年至公元前1500年。其用途至今仍是考古学上的谜团。",
+  "Eiffel Tower": "法国巴黎的标志性建筑，1889年为世界博览会而建。由古斯塔夫·埃菲尔设计，高324米，是法国文化的象征。",
+  "Westminster Abbey": "英国伦敦的哥特式教堂，自1066年起是英国君主加冕和安葬的场所。安葬了牛顿、达尔文等众多历史名人。",
+  "the Olympics": "起源于古希腊的综合性体育赛事，1896年恢复举办。每四年一届，是全世界最具影响力的体育盛会。",
+  "Nobel Prize": "根据瑞典发明家诺贝尔的遗嘱设立的奖项，1901年首次颁发。涵盖物理、化学、医学、文学、和平等领域，是全球最高荣誉。",
+  "Silicon Valley": "位于美国加利福尼亚州旧金山湾区南部，全球科技创新的中心。汇集了苹果、谷歌、Meta等众多科技巨头，是高科技产业的代名词。",
+  "Wall Street": "纽约市曼哈顿下城的一条街道，全球金融中心。纽交所和纳斯达克交易所所在地，象征着美国金融资本主义的力量。",
+  "the Taj Mahal": "印度阿格拉的白色大理石陵墓，莫卧儿皇帝沙贾汗为爱妃建造。被誉为“永恒爱情的象征”，是世界文化遗产。",
+  "the Great Barrier Reef": "位于澳大利亚东北海岸的世界最大珊瑚礁群，绵延2300公里。是世界自然遗产，拥有丰富的海洋生物多样性。",
+  "Vatican City": "位于罗马城内的独立国家，世界最小的国家。是天主教的中心，拥有圣彼得大教堂、梵蒂冈博物馆等文化瑰宝。",
+  "Mount Olympus": "希腊最高的山峰，在希腊神话中是众神的居所。是希腊文化和民族认同的重要象征。",
+  "Carnegie Hall": "纽约市著名的音乐厅，1891年由安德鲁·卡内基出资建造。是世界古典音乐演出的殿堂级场所。",
+  "UNESCO World Heritage": "由联合国教科文组织评选的具有突出普遍价值的文化遗产和自然遗产，旨在保护人类共同的宝贵财富。",
+  "Renaissance": "14至17世纪欧洲的思想文化运动，以复兴古希腊罗马文化为旗帜，强调人文主义精神，推动了艺术、科学和文学的繁荣。",
+  "Enlightenment": "18世纪欧洲的思想解放运动，倡导理性、自由、平等和民主，深刻影响了法国大革命和美国独立战争，奠定了现代西方价值观的基础。",
+  "the Middle Ages / Medieval": "欧洲历史上约5世纪至15世纪的时期，以封建制度和基督教会的统治为特征，常被称为“黑暗时代”。",
+  "Reformation": "16世纪始于德国的宗教运动，马丁·路德发表《九十五条论纲》，挑战天主教会的权威，促成了新教的诞生。",
+  "Roman Empire": "公元前27年至公元476年的古代帝国，曾统治地中海沿岸大部分地区。在法律、建筑、语言等方面对西方文明影响深远。",
+  "Byzantine Empire": "东罗马帝国，以君士坦丁堡为首都，延续至1453年。保存了古希腊罗马文化，是东西方文化交流的桥梁。",
+  "Greek Civilization": "西方文明的摇篮，在哲学、民主政治、戏剧、雕塑、科学等领域取得了辉煌成就，深刻影响了后世欧洲文化。",
+  "Industrial Revolution": "18世纪中叶始于英国的产业革命，从手工生产转向机器生产。极大提高了生产力，深刻改变了社会结构和人类生活方式。",
+  "the Crusades": "11至13世纪欧洲基督教国家对中东穆斯林发动的宗教军事远征。虽未实现长期占领，但促进了东西方贸易和文化交流。",
+  "colonial era": "15至20世纪欧洲列强在全球建立殖民地的时期。对世界政治格局、经济体系和文化交流产生了深远影响。",
+  "Romanticism": "18世纪末至19世纪初的文艺思潮，强调情感、想象和个性，反对理性主义的束缚，在文学、音乐和绘画领域影响深远。",
+  "Napoleonic Wars": "1803至1815年拿破仑领导法国对抗欧洲反法同盟的战争。战后维也纳会议重塑了欧洲政治格局。",
+  "Fascism": "20世纪上半叶兴起的极端民族主义政治运动，以墨索里尼的意大利和希特勒的德国为代表，导致了第二次世界大战。",
+  "British": "指与大不列颠及北爱尔兰联合王国相关的人、事物或文化特征。",
+  "American": "指与美利坚合众国相关的人、事物或文化特征。",
+  "European": "指与欧洲大陆相关的人、事物或文化特征，也常指欧盟成员国。",
+  "North American": "指与北美洲（主要是美国、加拿大、墨西哥）相关的人、事物或文化特征。",
+  "Canadian": "指与加拿大相关的人、事物或文化特征。",
+  "Indian": "指来自印度或具有印度文化背景的人，也指印度公民。",
+  "Christianity": "世界第一大宗教，公元1世纪起源于巴勒斯坦地区，以耶稣基督为救世主。经典为《圣经》，信徒约21至26亿。",
+  "Catholicism": "基督教最大的教派，以罗马教皇为最高领袖。强调教会传统和七项圣礼，信徒遍布全球，尤其在拉美和欧洲南部。",
+  "Protestantism": "16世纪宗教改革中从天主教分离出来的教派，强调“因信称义”和《圣经》的权威，是基督教三大派别之一。",
+  "Islam": "世界第二大宗教，7世纪由穆罕默德在阿拉伯半岛创立。经典为《古兰经》，信徒称为穆斯林，主要分布在中东、北非和东南亚。",
+  "Buddhism": "世界三大宗教之一，公元前6世纪由释迦牟尼在古印度创立。倡导“众生平等”和“四谛”，主要分布在亚洲。",
+  "Judaism": "世界上最古老的一神教，以《托拉》为经典。犹太教是基督教和伊斯兰教的共同源头，对西方文化影响深远。",
+  "English": "世界上使用最广泛的语言之一，是国际交流、科技和商业的主要语言。",
+  "Spanish": "世界第二大母语，主要在西班牙和拉丁美洲使用，是联合国六种官方语言之一。",
+  "Arabic": "阿拉伯世界的官方语言，是伊斯兰教经典《古兰经》的语言，使用人口超过4亿。",
+  "Mandarin": "中国官方语言，世界上使用人数最多的母语，也是联合国六种官方语言之一。",
+  "Japanese": "日本的官方语言，使用人口约1.25亿，书写系统由汉字、平假名和片假名组成。",
+  "French": "法国官方语言，也是联合国六种官方语言之一，在国际外交和文学领域具有重要地位。",
+  "German": "德国、奥地利和瑞士部分地区的官方语言，是欧洲使用人数最多的母语之一。",
+  "Latin": "古罗马帝国的语言，是罗曼语族（法语、西班牙语、意大利语等）的源头。中世纪欧洲的学术和宗教通用语言，至今在天主教和科学命名中使用。",
+};
+
+/* ============ 数据展开 ============ */
+/* 「词库」= 内置词表 DATA。运行时真正在用的题组是「内置词 + 用户自建词」，
+   所以所有遍历都用 allWords()，而不是直接用 ALL。 */
+/* 取某个词条的一句话介绍：优先用「板块|英文|中文」精确 key（处理重名），
+   再退化到只用英文名。自建词没有介绍，返回空串。 */
+function introOf(w){
+  if(!w) return '';
+  const exact = w.sec + '|' + w.en + '|' + w.cn;
+  if(typeof INTRO !== 'undefined' && INTRO[exact]) return INTRO[exact];
+  return (typeof INTRO !== 'undefined' && INTRO[w.en]) || '';
+}
+
+const ALL = [];
+DATA.forEach(sec => sec.words.forEach(w => {
+  ALL.push({ id: sec.key + '|' + w.en + '|' + w.cn, sec: sec.key, secTitle: sec.title,
+             g: w.g, cn: w.cn, en: w.en,
+             intro: introOf({ sec: sec.key, en: w.en, cn: w.cn }) });
+}));
+
+/* 用户自建词对应的板块 key / 标题 */
+const CUSTOM_SEC = 'custom';
+const CUSTOM_TITLE = '自建词';
+/* 自建词的稳定 id 前缀：内容变了 id 就变，保证「同一个词只存一条」 */
+const CUSTOM_PREFIX = 'custom|';
+function customIdOf(en, cn){ return CUSTOM_PREFIX + (en || '').trim() + '|' + (cn || '').trim(); }
+
+/* ============ 本地存储 ============ */
+const LS = {
+  get(k, d){ try{ const v = JSON.parse(localStorage.getItem(k)); return v === null || v === undefined ? d : v; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+let favs      = LS.get('etf_favs', {});
+/* 明确「取消收藏」的记录。
+   自建词默认就在生词本里（见 isFav），所以用户如果想把它移出生词本，
+   不能只删 favs 里那一位——必须在这里留个记号，才能盖过默认值。 */
+let unfavs    = LS.get('etf_unfavs', {});
+if(!unfavs || typeof unfavs !== 'object' || Array.isArray(unfavs)) unfavs = {};
+let results   = LS.get('etf_results', {});
+let activeTab = LS.get('etf_tab', 'all');
+/* 生词本里的「板块筛选」：只影响生词本这一轮刷哪些词，不改动词的分类。
+   取值 = 'all'（生词本全部）或某个板块 key（只刷生词本里属于该板块的词）。 */
+let favFilter = LS.get('etf_favfilter', 'all');
+let dir       = LS.get('etf_dir', 'en2cn');
+let shuffled  = LS.get('etf_shuffle', false);
+/* 每张卡的答题阶段（id -> 'done'）也要持久化，否则重开页面已答的卡会回到待答态 */
+let phaseMap  = LS.get('etf_phase', {});
+/* 上次停留的位置：记「单词 id」而不是下标，这样切板块/打乱顺序后也能找回同一张卡 */
+let lastWordId = LS.get('etf_last', null);
+/* 用户自建词（词库里没有、由导入带进来的词）。
+   存的是精简条目 [{id, en, cn, sec, secTitle, g}]，展开后与内置词结构一致。 */
+let customWords = LS.get('etf_custom', []);
+if(!Array.isArray(customWords)) customWords = [];
+
+/* 把一条自建词记录补全成与内置词同构的条目 */
+function normalizeCustom(c){
+  const en = ((c && c.en) || '').toString().trim();
+  const cn = ((c && c.cn) || '').toString().trim();
+  return { id: customIdOf(en, cn), sec: CUSTOM_SEC, secTitle: CUSTOM_TITLE,
+           g: ((c && c.g) || '').toString().trim() || CUSTOM_TITLE, cn, en };
+}
+/* 清洗从本地存储读到的自建词：丢掉空条目、按 id 去重、保持先后顺序 */
+(function sanitizeCustom(){
+  const seen = {}, out = [];
+  customWords.forEach(c => {
+    const w = normalizeCustom(c);
+    if(!w.en || !w.cn || seen[w.id]) return;
+    seen[w.id] = 1; out.push(w);
+  });
+  customWords = out;
+})();
+
+/* 运行时词表：内置词在前，自建词在后（题组、页签、导出、统计都基于它） */
+function allWords(){ return customWords.length ? ALL.concat(customWords) : ALL; }
+
+/* 是否在生词本里。
+   自建词是用户自己加进来的词，本身就属于「我的生词本」，
+   所以默认为真——这样即使 etf_custom 有、etf_favs 里没记（历史数据、
+   手工清理、换端只带了自建词），它也不会从生词本里凭空消失。
+   内置词仍然只看 favs 里有没有被 ★ 收藏过。
+
+   注意：不能直接写进 favs 就算完，因为用户取消收藏后要能真正划掉，
+   所以这里还需要一个「明确取消」的标记（unfav）来盖过默认值。 */
+function isFav(w){
+  if(!w) return false;
+  if(unfavs[w.id]) return false;                 // 用户明确取消过 → 不再算收藏
+  if(w.sec === CUSTOM_SEC) return true;          // 自建词天然属于生词本
+  return !!favs[w.id];
+}
+/* 已收藏的 id 集合（供只看收藏的遍历用） */
+function favIdsOf(list){ return list.filter(isFav); }
+
+/* 一次性迁移：把「已存在但从未被收藏过」的自建词补进 favs。
+   为什么要迁移：isFav 已经让自建词默认算收藏，即便不迁移界面也是对的；
+   但导出/导入走的是 favs 里的键，把它补齐能让导出的备份更完整、更省心。
+   同时顺手清掉指向「已不存在的自建词」的 unfavs 记号，避免长期堆积。
+   只跑一次（etf_favsMigrated 标记），不在每次启动时反复写盘。 */
+(function migrateCustomToFavs(){
+  // 清理失效的取消记号：只保留仍然存在的词条
+  const liveIds = {};
+  allWords().forEach(w => { liveIds[w.id] = 1; });
+  let dirty = false;
+  Object.keys(unfavs).forEach(id => {
+    if(!liveIds[id]){ delete unfavs[id]; dirty = true; }
+  });
+
+  if(!LS.get('etf_favsMigrated', false)){
+    customWords.forEach(c => { if(!favs[c.id]){ favs[c.id] = 1; dirty = true; } });
+    LS.set('etf_favsMigrated', true);
+    dirty = true;                       // 标记本身也要落盘
+  }
+  if(dirty){ LS.set('etf_favs', favs); LS.set('etf_unfavs', unfavs); }
+})();
+
+/* 全量落盘当前进度（位置 + 阶段 + 收藏 + 设置 + 自建词） */
+function saveProgress(){
+  LS.set('etf_phase', phaseMap);
+  LS.set('etf_results', results);
+  LS.set('etf_favs', favs);
+  LS.set('etf_unfavs', unfavs);
+  LS.set('etf_tab', activeTab);
+  LS.set('etf_favfilter', favFilter);
+  LS.set('etf_dir', dir);
+  LS.set('etf_shuffle', shuffled);
+  LS.set('etf_custom', customWords);
+  const w = deck[idx];
+  lastWordId = w ? w.id : null;
+  LS.set('etf_last', lastWordId);
+}
+
+/* ============ 词库构建 ============ */
+let deck = [], idx = 0;
+/* 每张卡片的答题阶段：'ask' 待作答 / 'done' 已判分。
+   以「单词 id -> 阶段」记录，而不是全局单值，
+   这样切词后自动回到 ask，已判分的卡片也能正确回显。 */
+function phaseOf(){ const w = deck[idx]; return w ? (phaseMap[w.id] || 'ask') : 'ask'; }
+function setPhase(v){ const w = deck[idx]; if(w) phaseMap[w.id] = v; }
+function refreshPhase(){ syncPhaseClass(); }
+
+/* ============ 本组错题练习 ============
+   一组词全部作答完（不论对错）后，底部给出「只练本组错题」的入口。
+   进入后题组换成这一组的错题，判分规则完全不变（结果照旧写回同一个 results）；
+   复习期间答对了，会把刚做错的词从错题清单里摘掉，走得出去的闭环。 */
+let reviewMode = false;                  // 当前是否处在「本组错题练习」里
+let reviewWords = null;                  // 进入复习瞬间冻结的那批错题（空数组也会保留）
+let parentDeck = null;                   // 进入复习前的题组，用于返回
+let parentIdx = 0;                       // 进入复习前看到第几张
+let lastWrong = {};                      // 词 id -> 1，在「本组已全答完」时冻结的错题清单
+
+/* 本组错题（按当前题组顺序）
+   —— 常规题组下 = 当前 deck 里判过「错」的词；
+      复习态下 = 冻结的错题里「还没答对」的词（答对即摘掉，走到 0 就是全清）。 */
+function wrongWordsOf(){
+  if(reviewMode){
+    return deck.filter(w => results[w.id] !== 'ok');
+  }
+  return deck.filter(w => results[w.id] === 'no');
+}
+/* 本组是否已全部作答（对错都算） */
+function groupAllAnswered(){
+  return deck.length > 0 && deck.every(w => results[w.id]);
+}
+/* 错题练习是不是已经走完（所有错题都答对了）——用于把入口置灰 */
+function reviewCleared(){
+  return Object.keys(lastWrong).length > 0 && wrongWordsOf().length === 0;
+}
+
+/* 进入「本组错题练习」：把这一组的错题冻成新题组，保持板块/筛选环境不变 */
+function startReview(){
+  const wrong = wrongWordsOf();
+  if(!wrong.length) return false;
+  reviewWords = wrong.slice();      // 冻结，之后答对不再改这份清单
+  parentDeck = deck.slice();        // 记下原题组，方便返回
+  parentIdx = idx;
+  reviewMode = true;
+  lastWrong = {};
+  reviewWords.forEach(w => { lastWrong[w.id] = 1; });
+  deck = reviewWords.slice();
+  idx = 0;
+  /* 关键：错题重新回到「待作答」状态 —— 否则这些词在上一轮已判过分，
+     phase 仍是 done，进来会直接呈「已答」外观、输入框被藏、按钮变「下一张」，
+     根本练不了。这里只重置 phase（作答态），保留旧 results 让「剩余」计数有据可依。 */
+  reviewWords.forEach(w => { phaseMap[w.id] = 'ask'; });
+  clearTimeout(autoNextTimer);
+  document.body.classList.remove('correct');
+  setKbd(false);
+  refreshPhase();
+  renderTabs(); render();
+  toast('本组错题 ' + reviewWords.length + ' 个，从头练起');
+  return true;
+}
+/* 退出错题练习，回到进入前那一组词 */
+function exitReview(){
+  if(!reviewMode) return false;
+  deck = parentDeck ? parentDeck.slice() : deck;
+  idx = Math.max(0, Math.min(parentIdx, deck.length - 1));
+  reviewMode = false; reviewWords = null; parentDeck = null; lastWrong = {};
+  clearTimeout(autoNextTimer);
+  document.body.classList.remove('correct');
+  setKbd(false);
+  refreshPhase();
+  renderTabs(); render();
+  saveProgress();
+  return true;
+}
+
+/* 答对后自动跳下一词的延时与定时器 */
+const AUTO_NEXT_MS = 620;
+let autoNextTimer = 0;
+/* 标记「这次切词是答对后自动跳的」，用于跳完把焦点交还输入框、保持输入法不中断 */
+let pendingAutoFocus = false;
+
+function shuffleArr(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function buildDeck(keepIdx){
+  /* 任何「重建题组」都意味着离开错题练习：切板块/切筛选/导入/打乱/重置后
+     如果还留在复习态，复习的就成了新题组的错题，语义会乱。 */
+  if(reviewMode){ reviewMode = false; reviewWords = null; parentDeck = null; lastWrong = {}; }
+  const cur = deck[idx];
+  const pool = allWords();                 // 内置词 + 自建词
+  let arr;
+  if(activeTab === 'all')       arr = pool.slice();
+  else if(activeTab === 'fav')  arr = favPool(pool);     // 生词本：可再按板块筛选
+  else                          arr = pool.filter(w => w.sec === activeTab);
+  deck = shuffled ? shuffleArr(arr) : arr;
+  const anchor = keepIdx && cur ? cur.id : lastWordId;   // 优先沿用当前卡，其次用上次保存的位置
+  if(anchor){
+    const i = deck.findIndex(w => w.id === anchor);
+    idx = i >= 0 ? i : 0;
+  }else idx = 0;
+  refreshPhase();
+  if(kbdOn) setKbd(false);     // 重建题组一律退出紧凑态，保证新词能正常判分
+}
+
+/* ============ 判定 ============ */
+function norm(s){
+  s = (s || '').toString().toLowerCase().trim();
+  s = s.replace(/^the\s+/i, '');
+  s = s.replace(/[，。、；：！？（）《》「」【】“”‘’·・\-—–~／\/\\,.;:!?"'`()\[\]{}|]/g, '');
+  return s.replace(/\s+/g, '');
+}
+function variants(ans){
+  const base = (ans || '').replace(/[（(][^）)]*[）)]/g, ' ');
+  return (ans + '|' + base).split(/[\/／;；,，、|]/).map(x => x.trim()).filter(Boolean);
+}
+function isCorrect(user, ans){
+  const u = norm(user);
+  if(!u) return false;
+  const cand = variants(ans).map(norm).filter(Boolean);
+  cand.push(norm(ans));
+  for(const v of cand){
+    if(!v) continue;
+    if(u === v) return true;
+    if(Math.min(u.length, v.length) >= 2 && (u.includes(v) || v.includes(u))) return true;
+  }
+  return false;
+}
+
+/* ============ DOM ============ */
+const $ = s => document.querySelector(s);
+const cardEl = $('#card'), tabsEl = $('#tabs');
+
+function escapeHTML(s){ return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* 手绘星标 SVG */
+const STAR_SVG = `
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path class="star-fill" d="M12 2.6l2.7 6 6.5.7-4.9 4.4 1.4 6.4L12 16.9 6.3 20.1l1.4-6.4L2.8 9.3l6.5-.7z"
+      fill="none" opacity="0"/>
+    <path class="star-path" d="M12 2.6l2.7 6 6.5.7-4.9 4.4 1.4 6.4L12 16.9 6.3 20.1l1.4-6.4L2.8 9.3l6.5-.7z"
+      fill="none" stroke="#2c2c2c" stroke-width="1.7" stroke-linejoin="round"/>
+  </svg>`;
+
+function renderTabs(){
+  const pool = allWords();
+  const favCount = pool.filter(isFav).length;
+  const secCount = key => pool.filter(x => x.sec === key).length;
+  const hasCustom = secCount(CUSTOM_SEC) > 0;
+  const items = [{key:'all', label:'全部', n:pool.length}]
+    .concat(DATA.map(s => ({key:s.key, label:s.title, n:secCount(s.key)})));
+  // 自建词板块：没有自建词时不出现，避免空页签干扰
+  if(hasCustom) items.push({key:CUSTOM_SEC, label:CUSTOM_TITLE, n:secCount(CUSTOM_SEC)});
+  items.push({key:'fav', label:'★ 生词本', n:favCount, fav:true});
+  // 当前选中的页签若已不存在（例如自建词被删光），退回「全部」
+  if(activeTab !== 'all' && activeTab !== 'fav' &&
+     !DATA.some(s => s.key === activeTab) && activeTab !== CUSTOM_SEC){
+    activeTab = 'all';
+  }
+  if(activeTab === CUSTOM_SEC && !hasCustom) activeTab = 'all';
+  // 生词本筛选指向的板块若已被清空，自动回到「全部」
+  if(activeTab === 'fav') normalizeFavFilter();
+
+  /* 生词本页签里，标签栏整体换成「板块筛选条」：
+     第一格是返回键，其余是把生词本按板块切开的筛选项——
+     不再另开一行工具带，卡片区域保持原样。 */
+  if(activeTab === 'fav'){
+    const favPoolAll = pool.filter(isFav);
+    const fitems = [{key:'all', label:'生词本', n:favPoolAll.length}];
+    DATA.forEach(s => {
+      const n = favPoolAll.filter(w => w.sec === s.key).length;
+      if(n) fitems.push({key:s.key, label:s.title, n});       // 生词本里没这个板块就不占位
+    });
+    tabsEl.innerHTML =
+        `<button class="tab back" data-back="1" aria-label="返回全部板块">‹ 全部板块</button>`
+      + fitems.map(it =>
+          `<button class="tab f${it.key===favFilter?' on':''}" data-fsec="${it.key}">`
+          + `${it.label}<span class="n">${it.n}</span></button>`).join('');
+    tabsEl.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+      clearTimeout(autoNextTimer);
+      setKbd(false);
+      if(b.dataset.back){                       // 返回：回到板块导航
+        activeTab = 'all';
+        buildDeck(false); renderTabs(); render();
+        saveProgress();
+        return;
+      }
+      if(!applyFavFilter(b.dataset.fsec)) { renderTabs(); return; }
+      scrollTabIntoView();
+    }));
+    scrollTabIntoView();
+    return;
+  }
+
+  tabsEl.innerHTML = items.map(it =>
+    `<button class="tab${it.key===activeTab?' on':''}${it.fav?' fav':''}" data-tab="${it.key}">`
+    + `${it.label}<span class="n">${it.n}</span></button>`).join('');
+  tabsEl.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    activeTab = b.dataset.tab;
+    clearTimeout(autoNextTimer);
+    setKbd(false);                       // 切板块先收键盘，避免卡在压缩态
+    buildDeck(false); renderTabs(); render();
+    saveProgress();
+    scrollTabIntoView();
+  }));
+}
+/* 让当前高亮的那一格滚进可视区（标签栏横向可滚） */
+function scrollTabIntoView(){
+  const t = tabsEl.querySelector('.tab.on');
+  if(t && t.scrollIntoView) t.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+}
+
+function statsHTML(){
+  const answered = deck.filter(w => results[w.id]).length;
+  const ok = deck.filter(w => results[w.id] === 'ok').length;
+  const rate = answered ? Math.round(ok / answered * 100) : 0;
+  if(reviewMode){
+    return `错题练习 <b>${deck.length}</b> 词 · 已答 <b>${answered}</b> · 正确率 <b>${rate}%</b>`;
+  }
+  return `本组 <b>${deck.length}</b> 词 · 已答 <b>${answered}</b> · 正确率 <b>${rate}%</b>`;
+}
+
+/* 一组词全部作答完之后出现的收尾条：
+   —— 有错题：给「只练本组错题」的入口（附错题数）
+   —— 没错题：给一句「全对」的嘉许，不再显示入口
+   复习态里改显示「还剩 N 个没答对」的进度与退出。 */
+function groupDoneBarHTML(){
+  if(reviewMode){
+    const left = wrongWordsOf().length;
+    if(left === 0){
+      return `<div class="donebar rv done">
+        <span class="db-k">✓ 错题都答对了</span>
+        <button class="db-b" id="rvExit2">回到本组词</button>
+      </div>`;
+    }
+    return `<div class="donebar rv">
+      <span class="db-k">还剩 <b>${left}</b> 个错题没答对</span>
+      <button class="db-b ghost" id="rvExit2">退出练习</button>
+    </div>`;
+  }
+  if(!groupAllAnswered()) return '';
+  const wrong = wrongWordsOf().length;
+  if(!wrong){
+    return `<div class="donebar done"><span class="db-k">✓ 这一组全答对了</span></div>`;
+  }
+  return `<div class="donebar">
+    <span class="db-k">本组做错 <b>${wrong}</b> 个</span>
+    <button class="db-b" id="rvStart">只练这 ${wrong} 个错题 ›</button>
+  </div>`;
+}
+function chipText(w){ return (w.g && w.g !== w.secTitle) ? w.g : w.secTitle; }
+
+/* 板块 key -> 标题（筛选提示文案用） */
+const SEC_TITLE_MAP = {};
+DATA.forEach(s => { SEC_TITLE_MAP[s.key] = s.title; });
+SEC_TITLE_MAP[CUSTOM_SEC] = CUSTOM_TITLE;
+
+/* ============ 生词本板块筛选 ============
+   生词本里的每一张卡仍保留自己原有的板块标注（「人名」「地名」…），
+   只是多一个筛选项：选定某个板块后，这一轮只拿生词本里属于该板块的词来翻译。
+   仅影响「刷哪些词」，不改动任何词的分类，也不动收藏。 */
+/* 生词本筛选指向的板块若已没有词（词被删/取消收藏/换端导入），就退回「全部」。
+   必须在 buildDeck 之前调用，否则会用一个已失效的筛选建出空题组。
+   注意这里不判 activeTab —— 启动时用户还没进生词本，但残留的失效筛选
+   已经会在切进生词本时立刻建出空组，所以一律先归位。 */
+function normalizeFavFilter(){
+  if(favFilter === 'all') return false;
+  const ok = allWords().some(w => isFav(w) && w.sec === favFilter);
+  if(ok) return false;
+  favFilter = 'all';
+  return true;
+}
+/* 生词本里「当前板块筛选」下的词（唯一入口，题组与页签计数共用同一口径） */
+function favPool(pool){
+  const base = pool.filter(isFav);
+  if(favFilter === 'all') return base;
+  return base.filter(w => w.sec === favFilter);
+}
+/* 切换筛选：重建题组并从该板块第一张开始（筛选换了，旧位置已无意义） */
+function applyFavFilter(key){
+  const valid = key === 'all' || DATA.some(s => s.key === key);
+  if(!valid) return false;
+  if(favFilter === key) return false;
+  favFilter = key;
+  LS.set('etf_favfilter', favFilter);
+  lastWordId = null;                 // 不沿用旧锚点，直接从头刷这一板块
+  buildDeck(false);
+  renderTabs(); render();
+  saveProgress();
+  return true;
+}
+
+/* 生成判分结果区的 HTML（confirmAnswer 与 render 回显共用同一份逻辑）
+   —— 只有「译错了 / 没作答」时才附上词条介绍，译对了保持原来的极简形态。 */
+function resultHTML(w, ok, gaveUp, user){
+  const expect = dir === 'en2cn' ? w.cn : w.en;
+  const cls = ok ? 'ok' : (gaveUp ? 'skip' : 'no');
+  const label = ok ? '✓ 译对了' : (gaveUp ? '— 没作答' : '✗ 译错了');
+  // 介绍只在答错/没作答时出现；自建词没有介绍，此时整块不渲染
+  const intro = ok ? '' : (w.intro || '');
+  return `<span class="stamp ${cls}">${label}</span>`
+    + (gaveUp ? '' : `<div class="kv"><span class="k">你写的</span><span class="v wavy">${escapeHTML((user || '').trim() || '（空）')}</span></div>`)
+    + `<div class="kv answer"><span class="k">参考答案</span><span class="v wavy">${escapeHTML(expect)}</span></div>`
+    + `<div class="kv"><span class="k">原词</span><span class="v">${escapeHTML(dir === 'en2cn' ? w.en : w.cn)}</span></div>`
+    + (intro ? `<div class="introbox"><span class="ik">词条介绍</span><p class="iv">${escapeHTML(intro)}</p></div>` : '');
+}
+
+/* 把卡片切到「已判分」外观。
+   mode:
+     'lite' —— 答对：保持紧凑，只显示一枚「译对了」印章（不把用户输入法挤走）
+     'full' —— 答错/没作答：恢复完整界面，显示参考答案等全部内容 */
+function applyDoneView(w, ok, gaveUp, user, mode){
+  const askBox = $('#askBox'), resultBox = $('#resultBox'), giveBtn = $('#giveBtn'), mainBtn = $('#mainBtn');
+  if(askBox) askBox.hidden = true;
+  if(giveBtn) giveBtn.hidden = true;
+  if(mainBtn) mainBtn.textContent = '下一张 →';
+  if(resultBox){
+    resultBox.hidden = false;
+    resultBox.innerHTML = resultHTML(w, ok, gaveUp, user);
+  }
+  document.body.classList.toggle('correct', mode === 'lite');
+  syncEnterHint();
+}
+
+/* 让输入法右下角按钮的文案跟随当前动作：答题时「确认」/ 判分后「下一项」 */
+function syncEnterHint(){
+  const inp = $('#input');
+  if(!inp) return;
+  inp.setAttribute('enterkeyhint', phaseOf() === 'ask' ? 'done' : 'next');
+}
+
+function render(){
+  $('#stats').innerHTML = statsHTML();
+  refreshPhase();          // 关键：切词后 phase 必须按「当前这张卡」重新计算，
+                           // 否则第一次判分后 phase 永远是 done，后面再也判不了分
+  // 新卡片一律先清掉「答对极简」形态，避免上一题的 correct 类残留
+  if(phaseOf() !== 'done') document.body.classList.remove('correct');
+
+  if(!deck.length){
+    cardEl.innerHTML = activeTab === 'fav'
+      ? `<div class="empty">
+           <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l5.4 12 13 1.4-9.8 8.8 2.8 12.8L24 34.2 12.6 41l2.8-12.8L5.6 19.4l13-1.4z" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/></svg>
+           <p><b>生词本还是空的</b><br>遇到不熟的词，点右上角的 ★ 收进来，<br>就能在这里集中复习。</p></div>`
+      : `<div class="empty">
+           <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 12h32M8 24h22M8 36h28" stroke="#2c2c2c" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="round"/></svg>
+           <p>这个板块还没有单词。</p></div>`;
+    $('#swipehint').style.visibility = 'hidden';
+    return;
+  }
+  $('#swipehint').style.visibility = 'visible';
+
+  const w = deck[idx];
+  const fav = isFav(w);
+  const askTerm = dir === 'en2cn' ? w.en : w.cn;
+  const ph = dir === 'en2cn' ? '在这里写下中文…' : '在这里写下英文…';
+
+  cardEl.innerHTML = `
+    <div class="pbar" role="progressbar" aria-valuemin="1" aria-valuemax="${deck.length}" aria-valuenow="${idx+1}">
+      <i style="width:${(idx+1)/deck.length*100}%"></i>
+    </div>
+    ${reviewMode ? `<div class="rvbar">
+        <span class="rvbar-k">✎ 错题练习</span>
+        <span class="rvbar-n">还剩 <b>${wrongWordsOf().length}</b> / ${reviewWords.length} 个没答对</span>
+        <button class="rvbar-x" id="rvExit">退出</button>
+      </div>` : ''}
+    <div class="card-top">
+      <span class="chip">${escapeHTML(chipText(w))}</span>
+      <button class="starbtn${fav?' on':''}" id="starBtn" aria-label="${fav?'取消收藏':'加入生词本'}" aria-pressed="${fav}">${STAR_SVG}</button>
+    </div>
+    <div class="body">
+      <div class="termrow">
+        <span class="term">${escapeHTML(askTerm)}</span>
+        <button class="speak" id="speakBtn" type="button" aria-label="朗读这个单词" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>
+            <path d="M16 9c1.2 1 1.2 5 0 6"/>
+            <path d="M18.6 6.8c2.2 2 2.2 8.4 0 10.4" stroke-dasharray="4 3"/>
+          </svg>
+        </button>
+      </div>
+      <div class="ask" id="askBox">
+        <input class="inp" id="input" placeholder="${ph}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-label="翻译输入框">
+      </div>
+      <div class="result" id="resultBox" hidden></div>
+      <div class="ops" id="ops">
+        <button class="btn ghost" id="giveBtn">不记得</button>
+        <button class="btn primary" id="mainBtn">确认翻译</button>
+      </div>
+    </div>
+    ${groupDoneBarHTML()}
+    <div class="foot">
+      <button class="navbtn" id="prevBtn" ${idx===0?'disabled':''}>‹ 上一张</button>
+      <span class="counter">${idx+1} / ${deck.length}</span>
+      <button class="navbtn" id="nextBtn" ${idx>=deck.length-1?'disabled':''}>下一张 ›</button>
+    </div>`;
+
+  // 若这张卡此前已判过分，回显当时的结论（翻页回来不会丢失评分结果）
+  if(phaseOf() === 'done') applyDoneView(w, results[w.id] === 'ok', !results[w.id], '');
+
+  $('#starBtn').addEventListener('click', toggleFav);
+  // 收尾条上的按钮（错题练习入口 / 退出练习）—— 整卡重绘时的绑定
+  const rvX = $('#rvExit'); if(rvX) rvX.addEventListener('click', () => exitReview());
+  bindDoneBar();
+  // 用 phaseOf() 实时判断，避免闭包捕获过期的 phase 值
+  $('#mainBtn').addEventListener('click', () => phaseOf() === 'ask' ? confirmAnswer(false) : go(1));
+  $('#giveBtn').addEventListener('click', () => confirmAnswer(true));
+  $('#prevBtn').addEventListener('click', () => go(-1));
+  $('#nextBtn').addEventListener('click', () => go(1));
+  const spk = $('#speakBtn'); if(spk) spk.addEventListener('click', () => speak(w.en));
+  const inp = $('#input');
+  if(inp){
+    // 回车键跟随输入法动作：
+    //   第 1 次回车 -> 判分；第 2 次回车（已在判分态）-> 跳下一个单词
+    // 用 preventDefault 拦掉输入法的"换行/确认"，避免页面上出现多余行为。
+    inp.addEventListener('keydown', e => {
+      if(e.key !== 'Enter' && e.keyCode !== 13) return;
+      e.preventDefault();
+      if(phaseOf() === 'ask') confirmAnswer(false);
+      else go(1);
+    });
+    // 移动端软键盘：聚焦时进入紧凑布局，失焦后恢复
+    inp.addEventListener('focus', () => {
+      if(!IS_TOUCH) return;
+      setKbd(true);
+      setTimeout(() => { if(inp.scrollIntoView) inp.scrollIntoView({block:'center', behavior:'smooth'}); }, 260);
+    });
+    inp.addEventListener('blur', () => {
+      // 卡片重建（切词）时旧输入框会被移除并触发 blur，此时不要退出紧凑态，
+      // 否则输入法会被收起，答对自动跳词就断了。
+      if(!inp.isConnected) return;
+      setKbd(false);
+    });
+    if(window.matchMedia('(min-width:760px)').matches && phaseOf() === 'ask') setTimeout(() => inp.focus(), 30);
+    // 自动跳词后：保持紧凑形态并把焦点交还给输入框，让输入法不中断
+    if(pendingAutoFocus && phaseOf() === 'ask'){
+      pendingAutoFocus = false;
+      setKbd(true);
+      setTimeout(() => { try{ inp.focus({preventScroll:true}); }catch(err){ inp.focus(); } }, 40);
+    }
+  }
+  // 已判分的卡片不再自动弹键盘
+  if(phaseOf() === 'done') setKbd(false);
+  syncEnterHint();
+}
+
+function toggleFav(){
+  const w = deck[idx]; if(!w) return;
+  if(isFav(w)){
+    /* 移出生词本：删掉收藏位，并留下「明确取消」的记号。
+       自建词靠这个记号才能盖过「默认就在生词本」的规则。 */
+    delete favs[w.id];
+    unfavs[w.id] = 1;
+    toast('已从生词本划掉');
+  }else{
+    favs[w.id] = 1;
+    delete unfavs[w.id];                  // 重新收藏时撤销取消记号
+    toast('已圈进生词本 ★');
+  }
+  saveProgress();
+  const b = $('#starBtn');
+  if(b){ b.classList.toggle('on', isFav(w)); b.setAttribute('aria-pressed', String(isFav(w))); }
+  // 划掉的可能正好是当前筛选板块里的最后一个词 → 筛选项要跟着失效，题组重建
+  if(normalizeFavFilter()){ buildDeck(false); render(); }
+  renderTabs();
+  syncExportBadge();
+  $('#stats').innerHTML = statsHTML();
+}
+
+/* 复习态顶部的「还剩 N / M」小标要随作答即时刷新，
+   否则答对一个之后数字还停在进去时的旧值，看着像没生效。 */
+function refreshReviewBar(){
+  const bar = cardEl.querySelector('.rvbar');
+  if(!bar) return;
+  if(!reviewMode){ bar.remove(); return; }
+  const n = cardEl.querySelector('.rvbar-n');
+  if(n) n.innerHTML = `还剩 <b>${wrongWordsOf().length}</b> / ${reviewWords.length} 个没答对`;
+}
+
+/* 把收尾条按当前状态放进卡片（判分后即时更新，不用整卡重绘）。
+   位置固定在 ops 与 foot 之间；不需要显示时就把已有的移除。 */
+function insertDoneBar(){
+  const host = cardEl.querySelector('.ops');
+  if(!host) return;
+  const old = cardEl.querySelector('.donebar');
+  const html = groupDoneBarHTML();
+  if(!html){ if(old) old.remove(); }
+  else if(old){ old.outerHTML = html; }
+  else host.insertAdjacentHTML('afterend', html);
+  bindDoneBar();
+  refreshReviewBar();
+}
+/* 收尾条上的按钮是整卡重绘之外插进来的，事件要单独绑一次 */
+function bindDoneBar(){
+  const rvStart = $('#rvStart'); if(rvStart) rvStart.addEventListener('click', () => startReview());
+  const rvX2 = $('#rvExit2');    if(rvX2)     rvX2.addEventListener('click', () => exitReview());
+}
+
+function confirmAnswer(gaveUp){
+  const w = deck[idx]; if(!w || phaseOf() !== 'ask') return;
+  const inp = $('#input');
+  const user = gaveUp ? '' : (inp ? inp.value : '');
+  const expect = dir === 'en2cn' ? w.cn : w.en;
+  const ok = !gaveUp && isCorrect(user, expect);
+
+  results[w.id] = ok ? 'ok' : 'no';
+  setPhase('done');
+  refreshPhase();
+  saveProgress();
+
+  if(ok){
+    /* ---- 答对：保持界面压缩，只显示「译对了」，然后自动跳下一个 ----
+       不能 blur / 不能 setKbd(false)，否则输入法会被收起、键盘"跳走"，
+       用户下一次答题还得重新点输入框。 */
+    applyDoneView(w, true, false, user, 'lite');
+    $('#stats').innerHTML = statsHTML();
+    insertDoneBar();                       // 刚答完的若是最后一张，立刻放出错题练习入口
+    // 极短停顿让用户看到「译对了」，随后自动进入下一词
+    clearTimeout(autoNextTimer);
+    const lastCard = idx >= deck.length - 1;
+    if(!lastCard){
+      autoNextTimer = setTimeout(() => {
+        if(phaseOf() === 'done' && document.body.classList.contains('correct')){
+          pendingAutoFocus = true;      // 跳完把焦点还给输入框，输入法不中断
+          go(1);
+        }
+      }, AUTO_NEXT_MS);
+    }else{
+      pendingAutoFocus = false;   // 已是最后一词，无下一词可跳
+    }
+  }else{
+    /* ---- 答错 / 没作答：恢复完整界面，让用户看清参考答案 ---- */
+    const inpEl = $('#input');
+    if(inpEl && IS_TOUCH) inpEl.blur();     // 收键盘，把完整信息展示出来
+    setKbd(false);                           // 退出紧凑态（会移除 correct 类）
+    applyDoneView(w, false, gaveUp, user, 'full');
+    $('#stats').innerHTML = statsHTML();
+    insertDoneBar();
+    const nb = $('#nextBtn'); if(nb && idx < deck.length - 1) nb.focus({preventScroll:true});
+  }
+}
+
+/* ============ 移动端视口 / 软键盘适配 ============ */
+const IS_TOUCH = ('ontouchstart' in window) || window.matchMedia('(hover:none), (pointer:coarse)').matches;
+const VV = window.visualViewport || null;
+/* baseViewH 只保存「键盘未弹起时」的稳定高度，绝不保存压缩后的高度 */
+let baseViewH = 0;
+let kbdOn = false;
+
+function resetBaseViewH(){
+  const h = VV ? VV.height : window.innerHeight;
+  baseViewH = Math.max(h, window.innerHeight || 0);
+}
+
+/* 紧凑模式的唯一开关入口，保证类名与布局状态始终同步 */
+function setKbd(on){
+  on = !!on;
+  if(!on) document.body.classList.remove('correct');   // 退出紧凑态时一并清掉极简形态
+  if(kbdOn === on){ syncPhaseClass(); return; }
+  kbdOn = on;
+  document.body.classList.toggle('kbd', on);
+  syncPhaseClass();
+  syncViewport();
+}
+
+function syncPhaseClass(){
+  document.body.classList.toggle('asking', phaseOf() === 'ask');
+}
+
+/* 只要返回按钮/输入框仍在 DOM 中且可见，说明键盘确实弹起 */
+function isEditing(){
+  const a = document.activeElement;
+  return !!(a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA'));
+}
+
+function syncViewport(){
+  const h = VV ? VV.height : window.innerHeight;
+  const top = VV ? VV.offsetTop : 0;
+  const root = document.documentElement;
+  root.style.setProperty('--app-h', Math.round(h) + 'px');
+  root.style.setProperty('--app-top', Math.round(top) + 'px');
+
+  if(!kbdOn){
+    // 未压缩时持续记录稳定基准高度
+    baseViewH = Math.max(baseViewH, h);
+  }else if(!isEditing()){
+    // 已在压缩态，但输入焦点已丢失 -> 判定键盘已收起，立即还原
+    setKbd(false);
+    return;
+  }
+
+  // 兜底：可视区骤降超过 140px，且确实在编辑中，才认定键盘弹出。
+  // 必须同时满足 isEditing()，否则会把「误判后撑高再测」的差值当真，导致永久卡住。
+  if(!kbdOn && IS_TOUCH && VV && isEditing() && baseViewH - h > 140){
+    setKbd(true);
+  }
+}
+
+let vvRaf = 0;
+function onViewportChange(){ cancelAnimationFrame(vvRaf); vvRaf = requestAnimationFrame(syncViewport); }
+if(VV){
+  VV.addEventListener('resize', onViewportChange);
+  VV.addEventListener('scroll', onViewportChange);
+}
+window.addEventListener('resize', onViewportChange);
+window.addEventListener('orientationchange', () => setTimeout(() => {
+  kbdOn = false; document.body.classList.remove('kbd');
+  baseViewH = 0; resetBaseViewH(); syncViewport();
+}, 220));
+window.addEventListener('pageshow', () => {
+  kbdOn = false; document.body.classList.remove('kbd');
+  resetBaseViewH(); syncViewport();
+});
+// bfcache 恢复 / 切回前台时，输入焦点状态已失效，统一还原
+document.addEventListener('visibilitychange', () => {
+  if(document.hidden){ setKbd(false); }
+  else onViewportChange();
+});
+window.addEventListener('blur', () => setKbd(false));
+
+/* ============ 朗读（含移动端兼容处理） ============ */
+let speechPrimed = false;
+function primeSpeech(){
+  if(speechPrimed || !('speechSynthesis' in window)) return;
+  speechPrimed = true;
+  try{
+    const s = window.speechSynthesis;
+    s.getVoices();                                  // 触发语音列表异步加载
+    const u = new SpeechSynthesisUtterance(' ');     // 首个用户手势内解锁 iOS 语音
+    u.volume = 0; u.lang = 'en-US';
+    s.speak(u);
+  }catch(e){}
+}
+function pickEnVoice(){
+  try{
+    const vs = window.speechSynthesis.getVoices() || [];
+    return vs.find(v => /^en[-_]US/i.test(v.lang))
+        || vs.find(v => /^en[-_]GB/i.test(v.lang))
+        || vs.find(v => /^en/i.test(v.lang)) || null;
+  }catch(e){ return null; }
+}
+function setSpeakState(on){
+  const b = document.getElementById('speakBtn');
+  if(!b) return;
+  b.classList.toggle('on', !!on);
+  b.setAttribute('aria-pressed', String(!!on));
+}
+function speak(text){
+  if(!('speechSynthesis' in window)){ toast('当前浏览器不支持朗读'); return; }
+  const s = window.speechSynthesis;
+  try{
+    // 仅在正在朗读时 cancel，避免 iOS 上 cancel + speak 同帧导致无声
+    if(s.speaking || s.pending) s.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = .92; u.pitch = 1; u.volume = 1;
+    const v = pickEnVoice(); if(v) u.voice = v;
+    u.onstart = () => setSpeakState(true);
+    u.onend = () => setSpeakState(false);
+    u.onerror = () => setSpeakState(false);
+    s.speak(u);
+    setTimeout(() => setSpeakState(false), Math.max(1500, text.length * 150)); // 极少数机型不回调 onend
+  }catch(e){ toast('朗读失败'); }
+}
+// iOS 要求语音必须由用户手势解锁：在捕获阶段抢在业务逻辑之前触发一次
+['pointerdown','touchstart','keydown'].forEach(ev =>
+  document.addEventListener(ev, primeSpeech, {once:true, capture:true, passive:true}));
+
+/* ============ 翻页 & 滑动（短促手绘反馈） ============ */
+let animating = false;
+function go(step){
+  if(animating || !deck.length) return;
+  const target = idx + step;
+  if(target < 0 || target >= deck.length){ bump(step); return; }
+  clearTimeout(autoNextTimer);          // 手动翻页时取消自动跳转，避免跳两次
+  document.body.classList.remove('correct');
+  animating = true;
+  cardEl.style.transition = 'transform .12s linear, opacity .12s linear';
+  cardEl.style.transform = `translateX(${step>0?-16:16}px) rotate(0deg)`;
+  cardEl.style.opacity = '0';
+  setTimeout(() => {
+    idx = target; render();
+    saveProgress();                     // 每次翻页都把当前位置落盘，重开页面可续上
+    cardEl.style.transition = 'none';
+    cardEl.style.transform = `translateX(${step>0?20:-20}px) rotate(-.35deg)`;
+    requestAnimationFrame(() => {
+      cardEl.style.transition = 'transform .14s linear, opacity .14s linear';
+      cardEl.style.transform = 'rotate(-.35deg)';
+      cardEl.style.opacity = '1';
+      setTimeout(() => { animating = false; }, 150);
+    });
+  }, 125);
+}
+function bump(step){
+  cardEl.style.transition = 'transform .1s linear';
+  cardEl.style.transform = `translateX(${step>0?-9:9}px) rotate(-1.4deg)`;
+  setTimeout(() => { cardEl.style.transform = 'rotate(-.35deg)'; }, 100);
+}
+
+(function drag(){
+  let sx = 0, sy = 0, dx = 0, active = false, locked = null;
+  const start = e => {
+    if(animating) return;
+    if(e.target.closest && e.target.closest('input,button')) { active = false; return; }
+    const p = e.touches ? e.touches[0] : e;
+    sx = p.clientX; sy = p.clientY; dx = 0; active = true; locked = null;
+    cardEl.style.transition = 'none';
+  };
+  const move = e => {
+    if(!active) return;
+    const p = e.touches ? e.touches[0] : e;
+    const mx = p.clientX - sx, my = p.clientY - sy;
+    if(locked === null){ if(Math.abs(mx) > 8 || Math.abs(my) > 8) locked = Math.abs(mx) > Math.abs(my) ? 'x' : 'y'; }
+    if(locked !== 'x') return;
+    if(e.cancelable) e.preventDefault();
+    dx = mx;
+    cardEl.style.transform = `translateX(${dx * .5}px) rotate(${(-0.35 + dx * 0.012).toFixed(2)}deg)`;
+    cardEl.style.opacity = String(Math.max(.6, 1 - Math.abs(dx) / 520));
+  };
+  const end = () => {
+    if(!active) return;
+    active = false;
+    cardEl.style.transition = 'transform .13s linear, opacity .13s linear';
+    cardEl.style.transform = 'rotate(-.35deg)';
+    cardEl.style.opacity = '1';
+    if(locked === 'x' && Math.abs(dx) > 62) go(dx < 0 ? 1 : -1);
+    dx = 0;
+  };
+  cardEl.addEventListener('touchstart', start, {passive:true});
+  cardEl.addEventListener('touchmove', move, {passive:false});
+  cardEl.addEventListener('touchend', end);
+  cardEl.addEventListener('touchcancel', end);
+  cardEl.addEventListener('mousedown', start);
+  window.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+})();
+
+document.addEventListener('keydown', e => {
+  // 输入框内的回车由输入框自己的监听器处理（判分 -> 下一个），这里不重复响应
+  if(e.target && e.target.tagName === 'INPUT' && e.key !== 'Enter') return;
+  if(e.key === 'ArrowLeft'){ e.preventDefault(); go(-1); }
+  else if(e.key === 'ArrowRight'){ e.preventDefault(); go(1); }
+  else if(e.key === 'Enter' && (!e.target || e.target.tagName !== 'INPUT')){
+    // 焦点不在输入框时（例如判分后已收键盘），回车直接推进到下一个单词
+    e.preventDefault();
+    if(phaseOf() === 'ask') confirmAnswer(false);
+    else go(1);
+  }
+});
+
+/* ============ 工具区 ============ */
+$('#dirSeg').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  dir = b.dataset.dir;
+  clearTimeout(autoNextTimer);
+  document.body.classList.remove('correct');
+  document.querySelectorAll('#dirSeg button').forEach(x => x.classList.toggle('on', x === b));
+  render();
+  saveProgress();
+});
+$('#shuffleBtn').addEventListener('click', () => {
+  shuffled = !shuffled;
+  $('#shuffleBtn').classList.toggle('on', shuffled);
+  clearTimeout(autoNextTimer);
+  document.body.classList.remove('correct');
+  setKbd(false);
+  buildDeck(false); render();
+  saveProgress();
+  toast(shuffled ? '顺序已打乱' : '顺序已还原');
+});
+$('#resetBtn').addEventListener('click', () => {
+  results = {}; phaseMap = {};      // 清空判分阶段，否则主按钮仍是「下一张」
+  lastWordId = null;                // 位置也一并归零
+  clearTimeout(autoNextTimer);
+  document.body.classList.remove('correct');
+  pendingAutoFocus = false;
+  setKbd(false);
+  refreshPhase();
+  buildDeck(false);                 // 重新从第一张开始
+  render();
+  saveProgress();
+  syncExportBadge();
+  toast('答题进度已擦掉重来');
+});
+
+/* ============ 生词本导出 ============ */
+/* 取出生词本里的词条（保持词表原始顺序，便于对照）。
+   注意用 allWords()：自建词也要能导出，否则换机同步会丢词。 */
+function favList(){
+  return allWords().filter(isFav).map(w => {
+    const r = results[w.id];
+    return { w, status: r === 'ok' ? '已掌握' : (r === 'no' ? '待复习' : '未测验') };
+  });
+}
+
+/* CSV 单元格转义：含逗号/引号/换行时用双引号包裹，内部引号翻倍
+   另外给「纯数字」「以 = + - @ 开头」的值前置制表符，
+   防止 Excel 把它当公式执行（CSV 注入防护）。 */
+function csvCell(v){
+  let s = (v === null || v === undefined) ? '' : String(v);
+  if(/^[=+\-@]/.test(s) || /^\d+(\.\d+)?$/.test(s)) s = '\t' + s;
+  if(/[",\r\n]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+function toCSV(rows){
+  // BOM 让 Excel 正确识别 UTF-8 中文，否则会乱码
+  return '\ufeff' + rows.map(r => r.map(csvCell).join(',')).join('\r\n');
+}
+
+function buildCSV(){
+  const rows = [['英文', '中文', '板块', '类别', '学习状态', '答题结果', '来源']];
+  favList().forEach(({ w, status }) => {
+    rows.push([w.en, w.cn, w.secTitle, (w.g || ''), status,
+               results[w.id] === 'ok' ? '正确' : (results[w.id] === 'no' ? '错误' : '未答'),
+               w.id.indexOf(CUSTOM_PREFIX) === 0 ? '自建词' : '内置词库']);
+  });
+  return toCSV(rows);
+}
+
+/* 纯文本：Anki/墨墨等常用「正,反面」逐行格式 */
+function buildTXT(){
+  const list = favList();
+  const lines = ['# 生词本 · 英语专有名词记忆卡', '# 导出时间：' + new Date().toLocaleString('zh-CN'),
+                 '# 共 ' + list.length + ' 条 · 格式：英文,中文', ''];
+  list.forEach(({ w }) => lines.push(w.en + ',' + w.cn));
+  return lines.join('\r\n');
+}
+
+/* JSON 备份：含答题记录与「自建词」标记，可完整还原生词本 */
+function buildJSON(){
+  return JSON.stringify({
+    app: '英语专有名词记忆卡',
+    version: 2,
+    exportedAt: new Date().toISOString(),
+    count: favList().length,
+    customCount: customWords.length,
+    favs: favList().map(({ w, status }) => ({
+      id: w.id, en: w.en, cn: w.cn, section: w.sec, sectionTitle: w.secTitle,
+      group: w.g || '', status, result: results[w.id] || null,
+      custom: w.id.indexOf(CUSTOM_PREFIX) === 0 || undefined,   // 标记自建词，方便导入端识别
+    })),
+  }, null, 2);
+}
+
+function stamp(){
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  return d.getFullYear() + p(d.getMonth()+1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes());
+}
+
+/* 触发下载。移动端 Safari 对 a[download] 支持不稳，用 blob URL + click，
+   失败时回落到「复制到剪贴板」并提示用户。 */
+function download(filename, text, mime){
+  try{
+    const blob = new Blob([text], { type: (mime || 'text/plain') + ';charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename; a.rel = 'noopener';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 1200);
+    return true;
+  }catch(e){ return false; }
+}
+
+function exportAs(kind){
+  const list = favList();
+  if(!list.length){ toast('生词本还是空的，先点 ★ 收藏几个词'); return; }
+
+  let text, name, mime;
+  if(kind === 'csv'){ text = buildCSV();  name = '生词本-' + stamp() + '.csv';  mime = 'text/csv'; }
+  else if(kind === 'txt'){ text = buildTXT();  name = '生词本-' + stamp() + '.txt';  mime = 'text/plain'; }
+  else { text = buildJSON(); name = '生词本备份-' + stamp() + '.json'; mime = 'application/json'; }
+
+  const ok = download(name, text, mime);
+  if(ok){ toast('已导出 ' + list.length + ' 个词 · ' + name.split('.').pop().toUpperCase()); }
+  else { toast('这台设备不支持直接下载，已改用剪贴板'); copyText(text); }
+}
+
+/* 复制（带 execCommand 兜底，兼容不支持 clipboard API 的旧浏览器 / http 环境） */
+function copyText(text){
+  const fallback = () => {
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, ta.value.length);
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(() => toast('已复制到剪贴板'),
+      () => toast(fallback() ? '已复制到剪贴板' : '复制失败，请手动长按选中'));
+  }else{
+    toast(fallback() ? '已复制到剪贴板' : '复制失败，请手动长按选中');
+  }
+}
+
+/* ============ 生词本导入 ============ */
+/* 词条匹配索引：优先按稳定 id，其次按「英文+中文」——
+   这样即使导出文件的 id 前缀变了（板块重命名/重构），也能靠内容对上。
+   索引里同时含内置词与自建词，重建后覆盖，保证导入判断永远基于最新词表。 */
+let BY_ID = {};
+let BY_PAIR = {};
+function rebuildIndex(){
+  BY_ID = {}; BY_PAIR = {};
+  allWords().forEach(w => {
+    BY_ID[w.id] = w;
+    BY_PAIR[(w.en || '').toLowerCase() + '\u0001' + (w.cn || '').toLowerCase()] = w;
+  });
+}
+rebuildIndex();
+
+/* 把一段文本解析成候选词条 [{en, cn, result?}]。
+   支持三种格式，自动嗅探，不用用户选：
+     1) JSON  —— {favs:[{en,cn,result}]} 或直接是数组
+     2) CSV   —— 带表头（含「英文」「中文」列），也兼容无表头
+     3) TXT   —— 每行「英文,中文」，跳过 # 注释与空行 */
+function parseImport(text){
+  const raw = (text || '').replace(/^\ufeff/, '').trim();
+  if(!raw) return { items: [], kind: 'empty', error: '内容为空' };
+
+  // ---- JSON ----
+  if(raw[0] === '{' || raw[0] === '['){
+    let obj;
+    try{ obj = JSON.parse(raw); }
+    catch(e){ return { items: [], kind: 'json', error: 'JSON 格式不对：' + e.message }; }
+    let arr = Array.isArray(obj) ? obj : (Array.isArray(obj.favs) ? obj.favs : null);
+    if(!arr) return { items: [], kind: 'json', error: 'JSON 里没找到 favs 数组' };
+    const items = arr.map(x => ({
+      en: (x && (x.en || x.english || x.term) || '').toString().trim(),
+      cn: (x && (x.cn || x.chinese || x.meaning) || '').toString().trim(),
+      id: (x && x.id || '').toString().trim(),
+      result: (x && (x.result || null)) || null,
+      ov: (x && x.ov || '').toString().trim(),      // 板块改判（可选）
+    })).filter(x => x.en || x.id);
+    return { items, kind: 'json' };
+  }
+
+  // ---- CSV：含逗号且首行像表头 ----
+  const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+  if(!lines.length) return { items: [], kind: 'empty', error: '没有可解析的内容' };
+
+  const splitCSVLine = line => {
+    const out = []; let cur = '', q = false;
+    for(let i = 0; i < line.length; i++){
+      const c = line[i];
+      if(q){
+        if(c === '"'){ if(line[i+1] === '"'){ cur += '"'; i++; } else q = false; }
+        else cur += c;
+      }else{
+        if(c === '"') q = true;
+        else if(c === ','){ out.push(cur); cur = ''; }
+        else cur += c;
+      }
+    }
+    out.push(cur);
+    return out.map(s => s.replace(/^\t/, '').trim());   // 去掉注入防护加的 \t
+  };
+
+  const head = splitCSVLine(lines[0]).map(s => s.toLowerCase());
+  const hasHeader = head.some(h => /英文|english|en\b|中文|chinese|cn\b|译文|释义/.test(h));
+
+  let iEn = -1, iCn = -1, iRes = -1, iStatus = -1;
+  if(hasHeader){
+    head.forEach((h, i) => {
+      if(iEn < 0 && /英文|english|^en$|单词|术语/.test(h)) iEn = i;
+      if(iCn < 0 && /中文|chinese|^cn$|译文|释义|翻译/.test(h)) iCn = i;
+      if(iRes < 0 && /答题|结果|result/.test(h)) iRes = i;
+      if(iStatus < 0 && /状态|status/.test(h)) iStatus = i;
+    });
+  }
+  const body = hasHeader ? lines.slice(1) : lines;
+
+  const items = [];
+  body.forEach(line => {
+    const cells = splitCSVLine(line);
+    let en, cn, result = null;
+    if(hasHeader && iEn >= 0){
+      en = cells[iEn] || '';
+      cn = iCn >= 0 ? (cells[iCn] || '') : '';
+      const st = iRes >= 0 ? (cells[iRes] || '') : (iStatus >= 0 ? (cells[iStatus] || '') : '');
+      if(/正确|对|ok|right|掌握/.test(st)) result = 'ok';
+      else if(/错误|错|no|wrong|复习/.test(st)) result = 'no';
+    }else{
+      // 无表头：按「英文,中文」两列
+      en = cells[0] || '';
+      cn = cells[1] || '';
+    }
+    en = (en || '').trim(); cn = (cn || '').trim();
+    if(!en) return;
+    // 单列且内容像中文 → 当作 cn 反查
+    if(!cn && /[\u4e00-\u9fa5]/.test(en)){ cn = en; en = ''; }
+    if(en || cn) items.push({ en, cn, result });
+  });
+
+  return { items, kind: hasHeader ? 'csv' : 'txt' };
+}
+
+/* 把候选词条解析成三桶：
+     hit    —— 命中词库（含已有的自建词）：直接进生词本
+     custom —— 词库里没有，但「英文+中文」齐全：作为自建词收进词表
+     miss   —— 信息不全（只有中文、或者空），没法建卡，跳过
+   自建词必须中英都有才能生成卡片，所以这里严格要求 en && cn。 */
+function resolveItems(items){
+  const pool = allWords();
+  const hit = [], custom = [], miss = [];
+
+  items.forEach(it => {
+    const en = (it.en || '').trim();
+    const cn = (it.cn || '').trim();
+    let w = null;
+
+    if(it.id && BY_ID[it.id]) w = BY_ID[it.id];
+    if(!w && en && cn){
+      w = BY_PAIR[en.toLowerCase() + '\u0001' + cn.toLowerCase()] || null;
+    }
+    if(!w && en){
+      // 英文唯一时也认（用户可能只填了英文）
+      const cands = pool.filter(x => (x.en || '').toLowerCase() === en.toLowerCase());
+      if(cands.length === 1) w = cands[0];
+    }
+    if(!w && cn && !en){
+      const cands = pool.filter(x => (x.cn || '').toLowerCase() === cn.toLowerCase());
+      if(cands.length === 1) w = cands[0];
+    }
+
+    if(w) hit.push({ w, result: it.result, ov: it.ov });
+    else if(en && cn) custom.push({ en, cn, result: it.result, ov: it.ov });   // ← 词库外，收为自建词
+    else miss.push(it);
+  });
+
+  return { hit, custom, miss };
+}
+
+/* —— 导入面板状态 —— */
+let importMode = 'merge';        // 'merge' | 'replace'
+let importParsed = null;         // parseImport 的结果
+let importPlan = null;           // { hit, custom, miss, newIds, dupIds }
+
+function resetImportPane(){
+  importParsed = null; importPlan = null;
+  const ta = $('#importText'); if(ta) ta.value = '';
+  const fi = $('#fileInput'); if(fi) fi.value = '';
+  const dz = $('#dropzone');
+  if(dz){ dz.classList.remove('loaded'); }
+  $('#dropTitle').textContent = '点击选择文件';
+  $('#dropHint').textContent = '支持 .json / .csv / .txt，也可以把文件拖进来';
+  $('#importReport').hidden = true;
+  $('#rErr').hidden = true;
+  $('#rErr').textContent = '';
+  $('#doImport').disabled = true;
+  setImportMode('merge');
+}
+
+function setImportMode(m){
+  importMode = m === 'replace' ? 'replace' : 'merge';
+  [['#modeMerge', 'merge'], ['#modeReplace', 'replace']].forEach(([sel, v]) => {
+    const b = $(sel); if(!b) return;
+    const on = v === importMode;
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-checked', String(on));
+  });
+  // 切换方式后重新出结论（数量一样，但提示文案不同）
+  if(importParsed) analyzeImport();
+}
+
+/* 解析 + 生成预览结论（不落盘） */
+function analyzeImport(){
+  const report = $('#importReport'), err = $('#rErr');
+  let items = [];
+
+  if(importParsed){
+    if(importParsed.error){
+      importPlan = null;                 // 结论作废，避免按钮/统计还指向上一次的计划
+      report.hidden = true;
+      err.hidden = false;
+      err.textContent = '读不出来：' + importParsed.error;
+      $('#doImport').disabled = true;
+      return;
+    }
+    items = importParsed.items || [];
+  }
+
+  if(!items.length){
+    // 没有内容：结论作废 + 计数归零（否则上次的数字会留在界面上误导用户）
+    importPlan = null;
+    report.hidden = true;
+    err.hidden = true;
+    ['#rTotal', '#rNew', '#rCustom', '#rCustomDup', '#rDup', '#rMiss'].forEach(sel => {
+      const el = $(sel); if(el) el.textContent = '0';
+    });
+    const note = $('#rNote'); if(note) note.textContent = '';
+    if(err){ err.hidden = true; err.textContent = ''; }
+    const bt = $('#doImport');
+    if(bt){ bt.disabled = true; bt.textContent = '确认导入'; }
+    return;
+  }
+
+  const { hit, custom: customRaw, miss } = resolveItems(items);
+  // 去重（同一词条出现多次只算一次）
+  const seen = new Set(); const uniq = [];
+  hit.forEach(h => { if(!seen.has(h.w.id)){ seen.add(h.w.id); uniq.push(h); } });
+
+  // 自建词：按「英文+中文」去重，并标出哪些是这次真新增的
+  const cSeen = new Set(); const custom = [];
+  customRaw.forEach(c => {
+    const id = customIdOf(c.en, c.cn);
+    if(cSeen.has(id)) return;
+    cSeen.add(id);
+    custom.push({ id, en: c.en, cn: c.cn, result: c.result, ov: c.ov, exists: !!BY_ID[id] });
+  });
+  const customNew = custom.filter(c => !c.exists);
+
+  const newIds = uniq.filter(h => !isFav(h.w));
+  const dupIds = uniq.filter(h => isFav(h.w));
+  const withScore = uniq.filter(h => h.result)
+    .concat(custom.filter(c => c.result).map(c => ({ result: c.result })));
+
+  // 覆盖自建词的收藏数（这里只给提示用，故意用 id 数组：doImport 里要用到）
+  const dupCustomCount = custom.filter(c => c.exists).length;
+
+  importPlan = { hit: uniq, custom, customNew, miss,
+                 newIds: newIds.map(h => h.w.id), dupIds: dupIds.map(h => h.w.id) };
+
+  err.hidden = true;
+  report.hidden = false;
+  $('#rTotal').textContent = String(uniq.length);
+  $('#rNew').textContent = String(newIds.length);
+  $('#rDup').textContent = String(dupIds.length);
+  $('#rMiss').textContent = String(miss.length);
+  const rCustom = $('#rCustom');
+  if(rCustom) rCustom.textContent = String(customNew.length);
+  const rCustomDup = $('#rCustomDup');
+  if(rCustomDup) rCustomDup.textContent = String(dupCustomCount);
+
+  const kindName = importParsed
+    ? ({ json: 'JSON 备份', csv: 'CSV 表格', txt: '纯文本', empty: '文本' }[importParsed.kind] || '文本')
+    : '文本';
+  const parts = ['识别为 ' + kindName];
+  if(importMode === 'replace'){
+    parts.push('将清空现有 ' + allWords().filter(isFav).length + ' 个收藏后按此重建');
+  }else{
+    parts.push('保留现有收藏，只补进 ' + newIds.length + ' 个新词');
+  }
+  if(customNew.length) parts.push('词库里没有的 ' + customNew.length + ' 个词会存为「自建词」');
+  if(withScore.length) parts.push('其中 ' + withScore.length + ' 个带答题记录会一起写入');
+  if(miss.length) parts.push(miss.length + ' 条信息不全（缺英文或中文），会被跳过');
+  $('#rNote').textContent = parts.join(' · ') + '。';
+
+  const total = uniq.length + customNew.length;
+  $('#doImport').disabled = (total === 0);   // 有可识别的就允许导入
+  $('#doImport').textContent = importMode === 'replace'
+    ? `替换导入 ${total} 个词` + (customNew.length ? `（含 ${customNew.length} 个自建词）` : '')
+    : (customNew.length
+        ? `合并导入 ${newIds.length} 个新词 + ${customNew.length} 个自建词`
+        : `合并导入 ${newIds.length} 个新词`);
+}
+
+/* 从文件读入 */
+function readFile(file){
+  if(!file) return;
+  if(file.size > 5 * 1024 * 1024){ toast('文件太大了（上限 5MB）'); return; }
+  const r = new FileReader();
+  r.onload = () => {
+    const text = (r.result || '').toString();
+    importParsed = parseImport(text);
+    const dz = $('#dropzone');
+    if(dz){ dz.classList.add('loaded'); }
+    $('#dropTitle').textContent = file.name;
+    $('#dropHint').textContent = (file.size / 1024).toFixed(1) + ' KB · 已读入';
+    const ta = $('#importText'); if(ta) ta.value = '';
+    analyzeImport();
+  };
+  r.onerror = () => { toast('文件读取失败'); };
+  r.readAsText(file, 'UTF-8');
+}
+
+/* 执行导入 */
+function doImport(){
+  if(!importPlan){ toast('没有可导入的词'); return; }
+  const hit = Array.isArray(importPlan.hit) ? importPlan.hit : [];
+  const custom = Array.isArray(importPlan.custom) ? importPlan.custom : [];
+  const dupIds = Array.isArray(importPlan.dupIds) ? importPlan.dupIds : [];
+  if(!hit.length && !custom.length){ toast('没有可导入的词'); return; }
+  const beforeFavs = allWords().filter(isFav).length;
+  const beforeCustom = customWords.length;
+
+  // dupIds 现在是 id 字符串数组（面板提示用）
+  const dupCount = dupIds.length;
+
+  // —— 记录面板里勾选的导入方式 ——
+  // 注意：导入成功后要 closeSheet()，而 closeSheet 会调 resetImportPane()，
+  // 那里把模式重置回 merge。所以模式必须在关闭面板之前先存下来，
+  // 否则「替换」的执行分支会读到已经被改回 merge 的值（自建词因此没被清掉/重建）。
+  let mode = importMode;
+  try{ mode = (document.querySelector('input[name="importMode"]:checked') || {}).value || importMode; }catch(e){}
+
+  // 1) 汇总这次导入涉及的全部「自建词」，两个来源都要算：
+  //    a) custom —— 词库里完全没有、这次才新建的
+  //    b) hit 里 sec === 'custom' 的 —— 之前导入过、已经在自建词表里的
+  //    （第二次导入同一个自建词时，它已经进了 BY_ID，会被走 id 分支归到 hit，
+  //      所以只看 custom 会把这类词漏掉。）
+  const rebuilt = []; const seenId = {};
+  const pushCustom = (en, cn) => {
+    const w = normalizeCustom({ en, cn });
+    if(!w.en || !w.cn || seenId[w.id]) return;
+    seenId[w.id] = 1; rebuilt.push(w);
+  };
+  custom.forEach(c => pushCustom(c.en, c.cn));
+  // 用 id 前缀判断来源，比 w.sec 更稳（自建词的 sec 恒为 custom，前缀也恒为 custom|）
+  hit.forEach(({ w }) => { if(w.id.indexOf(CUSTOM_PREFIX) === 0) pushCustom(w.en, w.cn); });
+
+  if(mode === 'replace'){
+    favs = {};
+    unfavs = {};                       // 取消记号也一并清掉，重建后自建词回到默认收藏态
+    results = {};                      // 替换模式下答题记录也一并重建
+    phaseMap = {};
+    customWords = rebuilt;             // 自建词按导入内容重建（没带到的旧自建词被清掉）
+  }else{
+    // 合并：只补进当前词表里没有的，已有的原样保留
+    const nowIds = {};
+    customWords.forEach(w => { nowIds[w.id] = 1; });
+    rebuilt.forEach(w => {
+      if(nowIds[w.id]) return;
+      nowIds[w.id] = 1;
+      customWords.push(w);
+    });
+  }
+
+  // 2) 全部收进生词本，让它们直接出现在卡片里
+  hit.forEach(({ w, result }) => {
+    favs[w.id] = 1;
+    delete unfavs[w.id];               // 导入即视为要它进生词本，撤销之前的「取消」记号
+    // 只在本地还没有结论时，才采纳导入的答题记录（不覆盖本机更新的进度）
+    if(result && !results[w.id]){ results[w.id] = result; phaseMap[w.id] = 'done'; }
+  });
+  custom.forEach(c => {
+    const id = c.id || customIdOf(c.en, c.cn);
+    favs[id] = 1;
+    delete unfavs[id];
+    if(c.result && !results[id]){ results[id] = c.result; phaseMap[id] = 'done'; }
+  });
+
+  // 3) 索引跟上新词表（自建词现在也算「已命中」）
+  rebuildIndex();
+
+  // 统计口径统一走 isFav：自建词天然算收藏，所以这里按「词条」数而不是 favs 键数来算
+  const afterFavs = allWords().filter(isFav).length;
+  const beforeFavsCounted = mode === 'replace' ? 0 : beforeFavs;
+  const added = Math.max(0, afterFavs - beforeFavsCounted);
+  const customAdded = Math.max(0, customWords.length - (mode === 'replace' ? 0 : beforeCustom));
+
+  // 导入完把位置挪到「这次导进来的第一个词」上，用户一眼就能看到刚同步的内容，
+  // 而不是停在导入前那个与本次无关的位置上（否则导入的词要翻很久才找得到）。
+  const firstImported = (hit.length && hit[0].w && hit[0].w.id)
+    || (custom.length && (custom[0].id || customIdOf(custom[0].en, custom[0].cn))) || null;
+  if(firstImported) lastWordId = firstImported;
+
+  // 替换导入会清空收藏，可能让生词本筛选指向的板块变空 → 先归位再建题组
+  normalizeFavFilter();
+
+  // 落盘 + 让界面各处跟上
+  syncExportBadge();
+  refreshExportPane();
+  buildDeck(false);
+  renderTabs();
+  render();
+  saveProgress();                     // 放在最后：此时 deck 已重建，位置锚点才准
+
+  closeSheet();                       // 注意：这一步会重置面板状态（含模式），故结论用上面存好的变量
+  const seg = [];
+  if(mode === 'replace'){
+    seg.push('已替换导入 ' + afterFavs + ' 个词');
+    if(customWords.length) seg.push('自建词 ' + customWords.length + ' 个');
+  }else{
+    if(added) seg.push('已合并导入 ' + added + ' 个新词');
+    else seg.push('已存在 ' + dupCount + ' 个词');
+    if(customAdded) seg.push('新增自建词 ' + customAdded + ' 个');
+    else if(rebuilt.length) seg.push('自建词都已在词表里');
+  }
+  toast(seg.join('，'));
+}
+
+/* —— 面板开关 —— */
+const dataSheet = $('#dataSheet'), sheetMask = $('#sheetMask');
+let lastFocusBeforeSheet = null;
+
+/* 面板内两个页签：导出 / 导入 */
+function switchPane(paneId){
+  ['#paneExport', '#paneImport'].forEach(sel => {
+    const p = $(sel); if(p) p.hidden = (sel !== '#' + paneId);
+  });
+  ['#tabExport', '#tabImport'].forEach(sel => {
+    const t = $(sel); if(!t) return;
+    const on = t.dataset.pane === paneId;
+    t.classList.toggle('on', on);
+    t.setAttribute('aria-selected', String(on));
+  });
+  $('#sheetTitle').textContent = paneId === 'paneImport' ? '导入数据' : '导出数据';
+}
+
+function openSheet(paneId){
+  refreshExportPane();
+  resetImportPane();
+  switchPane(paneId || 'paneExport');
+
+  lastFocusBeforeSheet = document.activeElement;
+  setKbd(false);
+  dataSheet.classList.add('show');
+  sheetMask.classList.add('show');
+  dataSheet.setAttribute('aria-hidden', 'false');
+  setTimeout(() => {
+    const b = paneId === 'paneImport' ? $('#dropzone') : $('#expCsv');
+    if(b && b.focus) b.focus({preventScroll:true});
+  }, 60);
+}
+
+function closeSheet(){
+  dataSheet.classList.remove('show');
+  sheetMask.classList.remove('show');
+  dataSheet.setAttribute('aria-hidden', 'true');
+  if(lastFocusBeforeSheet && lastFocusBeforeSheet.focus){
+    try{ lastFocusBeforeSheet.focus({preventScroll:true}); }catch(e){}
+  }
+}
+
+/* 重算导出页的统计与预览（导出后也要刷新） */
+function refreshExportPane(){
+  const list = favList();
+  const answered = list.filter(x => results[x.w.id]).length;
+  const right = list.filter(x => results[x.w.id] === 'ok').length;
+
+  $('#exportSub').innerHTML = list.length
+    ? `生词本共 <b>${list.length}</b> 个词 · 已测验 <b>${answered}</b> · 答对 <b>${right}</b>`
+    : '生词本还是空的 —— 先到卡片上点 ★ 收藏几个词，再回来导出。';
+
+  ['#expCsv', '#expTxt', '#expJson', '#expCopy'].forEach(sel => {
+    const el = $(sel); if(el) el.disabled = !list.length;
+  });
+
+  const prev = $('#exportPrevWrap'), pre = $('#exportPrev');
+  if(list.length){
+    prev.hidden = false;
+    const sample = ['英文,中文,板块,学习状态']
+      .concat(list.slice(0, 4).map(({ w, status }) =>
+        [w.en, w.cn, w.secTitle, status].map(csvCell).join(',')))
+      .concat(list.length > 4 ? ['…（其余 ' + (list.length - 4) + ' 条）'] : []);
+    pre.textContent = sample.join('\n');
+  }else{
+    prev.hidden = true;
+  }
+}
+
+$('#exportBtn').addEventListener('click', () => openSheet('paneExport'));
+$('#importBtn').addEventListener('click', () => openSheet('paneImport'));
+$('#sheetClose').addEventListener('click', closeSheet);
+sheetMask.addEventListener('click', closeSheet);
+$('#tabExport').addEventListener('click', () => switchPane('paneExport'));
+$('#tabImport').addEventListener('click', () => switchPane('paneImport'));
+$('#expCsv').addEventListener('click', () => exportAs('csv'));
+$('#expTxt').addEventListener('click', () => exportAs('txt'));
+$('#expJson').addEventListener('click', () => exportAs('json'));
+$('#expCopy').addEventListener('click', () => {
+  const list = favList();
+  if(!list.length){ toast('生词本还是空的'); return; }
+  copyText(buildTXT());
+});
+
+/* —— 导入面板事件 —— */
+$('#modeMerge').addEventListener('click', () => setImportMode('merge'));
+$('#modeReplace').addEventListener('click', () => setImportMode('replace'));
+$('#dropzone').addEventListener('click', () => { const fi = $('#fileInput'); if(fi) fi.click(); });
+$('#fileInput').addEventListener('change', e => readFile(e.target.files && e.target.files[0]));
+
+/* 拖拽文件进来 */
+['dragenter', 'dragover'].forEach(ev =>
+  $('#dropzone').addEventListener(ev, e => { e.preventDefault(); $('#dropzone').classList.add('over'); }));
+['dragleave', 'drop'].forEach(ev =>
+  $('#dropzone').addEventListener(ev, e => { e.preventDefault(); $('#dropzone').classList.remove('over'); }));
+$('#dropzone').addEventListener('drop', e => {
+  const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+  if(f) readFile(f);
+});
+
+/* 粘贴文本：输入即解析（做轻量防抖） */
+let importTaTimer = 0;
+$('#importText').addEventListener('input', () => {
+  clearTimeout(importTaTimer);
+  importTaTimer = setTimeout(() => {
+    const ta = $('#importText');
+    const text = ta ? ta.value : '';
+    if(!text.trim()){ importParsed = null; analyzeImport(); return; }
+    importParsed = parseImport(text);
+    const fi = $('#fileInput'); if(fi) fi.value = '';
+    const dz = $('#dropzone');
+    if(dz) dz.classList.remove('loaded');
+    $('#dropTitle').textContent = '点击选择文件';
+    $('#dropHint').textContent = '支持 .json / .csv / .txt，也可以把文件拖进来';
+    analyzeImport();
+  }, 220);
+});
+$('#doImport').addEventListener('click', doImport);
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && dataSheet.classList.contains('show')){ e.preventDefault(); closeSheet(); }
+});
+
+/* 工具条上的生词本计数角标 */
+function syncExportBadge(){
+  const n = allWords().filter(isFav).length;
+  const el = $('#exportCnt');
+  if(el) el.textContent = n ? String(n) : '';
+}
+
+/* 离开页面/切到后台时再存一次，避免最后一次操作没落盘 */
+window.addEventListener('pagehide', saveProgress);
+window.addEventListener('beforeunload', saveProgress);
+document.addEventListener('visibilitychange', () => { if(document.hidden) saveProgress(); });
+
+let toastTimer;
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1400);
+}
+
+/* ============ 启动 ============ */
+document.querySelectorAll('#dirSeg button').forEach(x => x.classList.toggle('on', x.dataset.dir === dir));
+$('#shuffleBtn').classList.toggle('on', shuffled);
+normalizeFavFilter();          // 必须在 buildDeck 之前：让失效的筛选先退回「全部」
+buildDeck(false);
+syncPhaseClass();
+resetBaseViewH();
+renderTabs();
+render();
+syncExportBadge();
+syncViewport();
+// 地址栏显隐 / 键盘收起后重新校准视口高度
+setTimeout(syncViewport, 300);
+window.addEventListener('load', () => { resetBaseViewH(); setTimeout(syncViewport, 120); });
+</script>
+</body>
+</html>
